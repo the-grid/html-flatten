@@ -1,8 +1,8 @@
 {
   "name": "html-flatten",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "flattens arbitrary html into a sane structure",
-  "main": "index.js",
+  "main": "index.coffee",
   "scripts": {
     "test": "grunt test"
   },
