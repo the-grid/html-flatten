@@ -1,4 +1,4 @@
-Flatten = require '../index'
+Flatten = require '../index.coffee'
 chai = require 'chai'
 
 describe 'Flatten', ->
