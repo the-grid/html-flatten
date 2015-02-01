@@ -7,7 +7,7 @@ module.exports = ->
     coffee:
       main:
         src: 'index.coffee'
-        dest: 'index.js'
+        dest: 'build/flatten-html.js'
 
     # Automated recompilation and testing when developing
     watch:
