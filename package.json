@@ -4,8 +4,7 @@
   "description": "flattens arbitrary html into a sane structure",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test",
-    "build": "./node_modules/.bin/coffee -c index.coffee"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
