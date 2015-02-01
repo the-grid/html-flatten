@@ -6,8 +6,8 @@
     "bergie/node-htmlparser": "published",
     "medialize/URI.js": "*"
   },
-  "main": "index.js",
+  "main": "index.coffee",
   "scripts": [
-    "index.js"
+    "index.coffee"
   ]
 }
