@@ -1,0 +1,9 @@
+/bower_components/*
+/node_modules/
+/build/
+/browser/
+/spec/*.js
+/spec/*.xml
+/spec/*.html
+npm-debug.log
+.DS_Store
