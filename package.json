@@ -1,6 +1,6 @@
 {
   "name": "html-flatten",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "flattens arbitrary html into a sane structure",
   "main": "index.coffee",
   "scripts": {
@@ -18,6 +18,9 @@
   "dependencies": {
     "htmlparser": "1.7.x",
     "URIjs": "^1.13.1"
+  },
+  "browserify": {
+    "transform": ["coffeeify"]
   },
   "author": "The Grid",
   "license": "MIT",
