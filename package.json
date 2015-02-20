@@ -1,6 +1,6 @@
 {
   "name": "html-flatten",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "flattens arbitrary html into a sane structure",
   "main": "index.coffee",
   "scripts": {
