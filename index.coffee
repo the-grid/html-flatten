@@ -125,7 +125,17 @@ module.exports = class Flatten
       when 'iframe'
         return results unless tag.attribs
         tag.attribs.src = @normalizeUrl tag.attribs.src, id
-        if tag.attribs.src.indexOf('vimeo.com') isnt -1 or tag.attribs.src.indexOf('youtube.com') isnt -1
+        if tag.attribs.src.indexOf('vimeo.com') isnt -1
+          results.push
+            type: 'video'
+            video: tag.attribs.src
+            html: @tagToHtml tag, id
+        else if tag.attribs.src.indexOf('youtube.com') isnt -1
+          results.push
+            type: 'video'
+            video: tag.attribs.src
+            html: @tagToHtml tag, id
+        else if tag.attribs.src.indexOf('vine.co') isnt -1
           results.push
             type: 'video'
             video: tag.attribs.src
