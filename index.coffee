@@ -93,7 +93,7 @@ module.exports = class Flatten
   normalizeUrl: (url, base) ->
     return url unless base
     parsed = uri url
-    return url if parsed.protocol() in ['javascript', 'mailto']
+    return url if parsed.protocol() in ['javascript', 'mailto', 'data']
     abs = parsed.absoluteTo(base).toString()
     abs
 
