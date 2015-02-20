@@ -1,7 +1,7 @@
 {
   "name": "html-flatten",
   "repo": "the-grid/html-flatten",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "dependencies": {
     "bergie/node-htmlparser": "published",
     "medialize/URI.js": "*"
