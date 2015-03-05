@@ -6,9 +6,6 @@ describe 'Flatten', ->
   beforeEach ->
     f = new Flatten()
 
-  describe 'when instantiated', ->
-    console.log f
-
   describe 'flattening HTML structures inside item', ->
     it 'should be able to find a video and a paragraph', (done) ->
       sent =
