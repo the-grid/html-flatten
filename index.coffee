@@ -69,9 +69,8 @@ module.exports = class Flatten
 
   flattenItem: (item, callback) ->
     if item.content and not item.html
-      # Already flattened
-      do callback
-      return
+      # Pre-flattened item, just make sure HTML is sane
+      return @cleanUpItem item, callback
 
     unless item.html.match /^[\s]*</
       item.html = "<p>#{item.html}</p>"
@@ -89,6 +88,53 @@ module.exports = class Flatten
       ignoreWhitespace: true
     parser = new htmlparser.Parser handler
     parser.parseComplete item.html
+
+  cleanUpItem: (item, callback) ->
+    todo = item.content.slice 0
+    iteration = =>
+      unless todo.length
+        do callback
+        return
+      block = todo.shift()
+      @cleanUpBlock block, item, iteration
+    do iteration
+
+  cleanUpBlock: (block, item, callback) ->
+    handler = new htmlparser.DefaultHandler (err, dom) =>
+      blocks = []
+      for tag in dom
+        normalized = @normalizeTag tag, item.id
+        continue unless normalized
+        for b in normalized
+          blocks.push b
+
+      blockIdx = item.content.indexOf block
+      unless blocks.length
+        # Empty block, remove
+        item.content = item.content.splice blockIdx, 1
+        return callback()
+      if blocks.length is 1
+        # Block returned only one block, update values
+        item.content[blockIdx][k] = v for k, v of blocks[0]
+        return callback()
+
+      if block.type is blocks[0].type
+        # First result is still the original, update that and add the others
+        [first, blocks...] = blocks
+        item.content[blockIdx][k] = v for k, v of first
+        for b, i in blocks
+          item.content.splice blockIdx + 1 + i, 0, b
+        return callback()
+
+      [first, blocks...] = blocks
+      item.content[blockIdx] = first
+      for b, i in blocks
+        item.content.splice blockIdx + 1 + i, 0, b
+      do callback
+    ,
+      ignoreWhitespace: true
+    parser = new htmlparser.Parser handler
+    parser.parseComplete block.html
 
   normalizeUrl: (url, base) ->
     return url unless base
