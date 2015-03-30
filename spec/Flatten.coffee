@@ -19,6 +19,7 @@ describe 'Flatten', ->
           <source type="video/webm" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm"/>
         </video>
         <p class='pagination-centered'><img class='img-polaroid' src='http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png' /><img /></p>
+        <img alt="Some pretty impressive climbing right there -&gt;&quot;&commat;Arcteryx&colon; &commat;Gilwad climbing Helmcken Falls http&colon;&sol;&sol;ow&period;ly&sol;JwnFL" src="https://pbs.twimg.com/media/B-iy-ETCYAAGEcU.jpg:large">
         <p><button data-uuid="71bfc2e0-4a96-11e4-916c-0800200c9a66" data-role="cta" data-verb="purchase" data-price="96">Buy now</button></p>
         """
 
@@ -38,6 +39,11 @@ describe 'Flatten', ->
           type: 'image'
           src: 'http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png'
           html: '<img src="http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png">'
+        ,
+          type: 'image'
+          src: 'https://pbs.twimg.com/media/B-iy-ETCYAAGEcU.jpg:large'
+          caption: 'Some pretty impressive climbing right there ->"@Arcteryx: @Gilwad climbing Helmcken Falls http://ow.ly/JwnFL'
+          html: '<img alt="Some pretty impressive climbing right there -&gt;&quot;&commat;Arcteryx&colon; &commat;Gilwad climbing Helmcken Falls http&colon;&sol;&sol;ow&period;ly&sol;JwnFL" src="https://pbs.twimg.com/media/B-iy-ETCYAAGEcU.jpg:large">'
         ,
           type: 'cta'
           uuid: '71bfc2e0-4a96-11e4-916c-0800200c9a66'

@@ -1,4 +1,5 @@
 htmlparser = require 'htmlparser'
+entities = require 'entities'
 uri = require 'URIjs'
 
 module.exports = class Flatten
@@ -72,7 +73,8 @@ module.exports = class Flatten
       # Pre-flattened item, just make sure HTML is sane
       return @cleanUpItem item, callback
 
-    unless item.html.match /^[\s]*</
+    item.html = '' unless item.html
+    if item.html and not item.html.match /^[\s]*</
       item.html = "<p>#{item.html}</p>"
 
     handler = new htmlparser.DefaultHandler (err, dom) =>
@@ -213,8 +215,8 @@ module.exports = class Flatten
           type: 'image'
           src: tag.attribs.src
           html: @tagToHtml tag, id
-        img.title = tag.attribs.title if tag.attribs.title
-        img.caption = tag.attribs.alt if tag.attribs.alt
+        img.title = entities.decodeHTML(tag.attribs.title) if tag.attribs.title
+        img.caption = entities.decodeHTML(tag.attribs.alt) if tag.attribs.alt
         results.push img
       when 'figure'
         return results unless tag.children
@@ -261,8 +263,8 @@ module.exports = class Flatten
          article =
            type: 'article'
            html: @tagToHtml tag, id
-         article.title = title if title
-         article.caption = caption if caption
+         article.title = entities.decodeHTML(title) if title
+         article.caption = entities.decodeHTML(caption) if caption
          article.src = src if src
          results.push article
       when 'p', 'em', 'small'
