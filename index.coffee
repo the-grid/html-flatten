@@ -254,9 +254,11 @@ module.exports = class Flatten
         for child in tag.children
           if child.name is 'h1' and not title
             title = ''
+            continue unless child.children
             title += @tagToHtml c for c in child.children
           if child.name is 'p' and not caption
             caption = ''
+            continue unless child.children
             caption += @tagToHtml c for c in child.children
           if child.name is 'img' and child.attribs.src and not src
             src = @normalizeUrl child.attribs.src, id
