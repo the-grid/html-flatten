@@ -111,6 +111,7 @@ module.exports = class Flatten
           blocks.push b
 
       blockIdx = item.content.indexOf block
+      return callback() if blockIdx is -1
       unless blocks.length
         # Empty block, remove
         item.content = item.content.splice blockIdx, 1
@@ -244,7 +245,7 @@ module.exports = class Flatten
           type: type
           src: src
           html: @tagToHtml tag, id, true
-        img.caption = caption if caption
+        img.caption = entities.decodeHTML(caption) if caption
         results.push img
       when 'article'
         return results unless tag.children
