@@ -111,10 +111,10 @@ module.exports = class Flatten
           blocks.push b
 
       blockIdx = item.content.indexOf block
-      return callback() if blockIdx is -1
+      #return callback() if blockIdx is -1
       unless blocks.length
         # Empty block, remove
-        item.content = item.content.splice blockIdx, 1
+        item.content.splice blockIdx, 1
         return callback()
       if blocks.length is 1
         # Block returned only one block, update values

@@ -29,7 +29,7 @@ describe 'Cleanup', ->
         done()
 
   describe 'cleaning a dirty HTML structure', ->
-    it 'produce clean blocks', (done) ->
+    it 'should produce clean blocks', (done) ->
       item =
         content: [
           id: 'foo'
@@ -57,4 +57,19 @@ describe 'Cleanup', ->
           type: 'text'
           html: '<p>Foobar</p>'
         chai.expect(item.content[2]).to.eql orig.content[1]
+        done()
+
+  describe 'cleaning up a full item', ->
+    it 'should produce clean blocks', (done) ->
+      fs = require 'fs'
+      path = require 'path'
+      item = JSON.parse fs.readFileSync __dirname+'/fixtures/put.json', 'utf-8'
+      orig = JSON.parse JSON.stringify item
+      f.flattenItem item, ->
+        types = item.content.map (b) -> b.type
+        chai.expect(types).to.eql [
+          'image'
+          'image'
+          'image'
+        ]
         done()
