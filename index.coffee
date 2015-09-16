@@ -10,6 +10,7 @@ module.exports = class Flatten
     'title'
     'body'
     'div'
+    'font'
     'section'
     'span'
     'header'
