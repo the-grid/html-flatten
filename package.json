@@ -2,8 +2,9 @@
   "name": "html-flatten",
   "version": "0.1.10",
   "description": "flattens arbitrary html into a sane structure",
-  "main": "index.coffee",
+  "main": "build/flatten-html.js",
   "scripts": {
+    "prepublish": "grunt build:main",
     "test": "grunt test"
   },
   "repository": {
