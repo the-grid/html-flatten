@@ -291,7 +291,7 @@ module.exports = class Flatten
             for n in normalizedChild
               continue unless n.type in ['image', 'video']
               normalized.push n
-              remove.push child if child.children.length is 1
+              remove.push child
           else
             hasContent = true
         # If we only have images or videos inside, then return them
@@ -336,11 +336,13 @@ module.exports = class Flatten
         return results unless tag.children
         if tag.attribs?.href
           tag.attribs.href = @normalizeUrl tag.attribs.href, id
-        normalizedChild = @normalizeTag tag.children[0], id
-        return results unless normalizedChild.length
+        normalizedChildren = []
+        for c in tag.children
+          normalizedChildren = normalizedChildren.concat @normalizeTag c, id
+        return results unless normalizedChildren.length
         if tag.attribs?.href
-          normalizedChild[0].html = @tagToHtml tag, id
-        return normalizedChild
+          normalizedChildren[0].html = @tagToHtml tag, id
+        return normalizedChildren
       when 'button'
         return results unless tag.attribs?['data-role']
         normalized = {}

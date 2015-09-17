@@ -589,7 +589,6 @@ describe 'Flatten', ->
         html: html
 
       f.processPage sent, (data) ->
-        console.log data
         images = data.content.filter (block) -> block.type is 'image'
         chai.expect(images.length).to.equal 6
         srcs = images.map (image) -> image.src
