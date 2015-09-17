@@ -1,4 +1,4 @@
-Flatten = require '../index.coffee'
+Flatten = require '../build/flatten-html'
 chai = require 'chai'
 
 describe 'Flatten', ->
@@ -446,7 +446,7 @@ describe 'Flatten', ->
             video: '//player.vimeo.com/video/72238422?color=ffffff'
             html: '<iframe src="//player.vimeo.com/video/72238422?color=ffffff" width="500" height="281" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>'
           ,
-            type: 'unknown'
+            type: 'interactive'
             html: '<iframe src="//foo.bar.com/foo"></iframe>'
           ]
         ]

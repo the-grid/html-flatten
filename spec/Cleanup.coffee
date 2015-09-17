@@ -1,4 +1,4 @@
-Flatten = require '../index.coffee'
+Flatten = require '../build/flatten-html'
 chai = require 'chai'
 
 describe 'Cleanup', ->

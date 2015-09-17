@@ -206,7 +206,7 @@ module.exports = class Flatten
             html: @tagToHtml tag, id
         else
           results.push
-            type: 'unknown'
+            type: 'interactive'
             html: @tagToHtml tag, id
       when 'img'
         return results unless tag.attribs
