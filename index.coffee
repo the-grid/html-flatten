@@ -53,7 +53,7 @@ module.exports = class Flatten
 
   processPage: (page, callback) ->
     if page.html and not page.items
-      @flattenItem page, =>
+      @flattenItem page, ->
         callback page
       return
 
@@ -64,7 +64,7 @@ module.exports = class Flatten
     toDo = page.items.length
 
     for item in page.items
-      @flattenItem item, =>
+      @flattenItem item, ->
         toDo--
         return unless toDo is 0
         callback page
