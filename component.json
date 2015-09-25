@@ -4,7 +4,7 @@
   "version": "0.1.5",
   "dependencies": {
     "bergie/node-htmlparser": "published",
-    "medialize/URI.js": "*"
+    "medialize/URI.js": "v.0.16.0"
   },
   "main": "index.coffee",
   "scripts": [
