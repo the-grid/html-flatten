@@ -1,6 +1,14 @@
 language: node_js
 sudo: false
 node_js:
-  - "0.10"
+- '0.10'
 before_install:
-  - npm install -g grunt-cli
+- npm install -g grunt-cli
+deploy:
+  provider: npm
+  email: henri.bergius@iki.fi
+  api_key:
+    secure: KWr3py5VyOGwc30XAHa5Fk/58x3JmeV0xG4ShligLKsKvhAEliffEt/+yJ43+nCQSUpv2VRwA/1vYkBPz/o2r/ZaBvyJRuZG0p22SczKwJ08ALVun7ZVlRl85zxsrAbctO4gRYjO6ph2yW/rKnO50VKany4LgyIvIhasoPftfak=
+  on:
+    tags: true
+    repo: the-grid/html-flatten
