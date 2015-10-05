@@ -309,9 +309,11 @@ module.exports = class Flatten
         if normalized.length
           results.push n for n in normalized
       when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-        results.push
+        normalized =
           type: tag.name
           html: @tagToHtml tag, id
+        normalized.text = @tagToText tag
+        results.push normalized
       when 'pre'
         results.push
           type: 'code'
@@ -401,3 +403,12 @@ module.exports = class Flatten
     if tag.name isnt 'img' and tag.name isnt 'source'
       html += "</#{tag.name}>"
     return html
+
+  tagToText: (tag) ->
+    text = ''
+    if tag.type is 'text'
+      return entities.decodeHTML tag.data
+    if tag.children
+      for child in tag.children
+        text += @tagToText child
+    text

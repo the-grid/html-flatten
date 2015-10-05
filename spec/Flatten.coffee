@@ -274,12 +274,14 @@ describe 'Flatten', ->
           content: [
             type: 'h1'
             html: '<h1>Hello World</h1>'
+            text: 'Hello World'
           ,
             type: 'text'
             html: '<p>Some text</p>'
           ,
             type: 'h2'
             html: '<h2>Foo bar</h2>'
+            text: 'Foo bar'
           ]
         ]
 

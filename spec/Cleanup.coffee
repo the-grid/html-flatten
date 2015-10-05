@@ -23,6 +23,7 @@ describe 'Cleanup', ->
             title: 'Bar'
         ]
       expected = JSON.parse JSON.stringify item
+      expected.content[0].text = 'Hello world!'
 
       f.flattenItem item, ->
         chai.expect(item).to.eql expected
@@ -51,6 +52,7 @@ describe 'Cleanup', ->
           id: 'foo'
           type: 'h1'
           html: '<h1>Hello world!</h1>'
+          text: 'Hello world!'
           metadata:
             title: 'Foo'
         chai.expect(item.content[1]).to.eql
