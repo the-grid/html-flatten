@@ -1,6 +1,6 @@
 htmlparser = require 'htmlparser'
 entities = require 'entities'
-uri = require 'URIjs'
+uri = require 'urijs'
 
 module.exports = class Flatten
   structuralTags: [
