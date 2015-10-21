@@ -433,6 +433,32 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+    it 'should keep p nested in blockquote', (done) ->
+      sent =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          html: """
+          <blockquote><p data-grid-id="0123">block quote</p></blockquote>
+          """
+        ]
+
+      expected =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          content: [
+            type: 'quote'
+            html: """
+            <blockquote><p data-grid-id="0123">block quote</p></blockquote>
+            """
+          ]
+        ]
+
+      f.processPage sent, (data) ->
+        chai.expect(data).to.deep.eql expected
+        done()
+
     it 'should be able to detect iframe videos', (done) ->
       sent =
         path: 'foo/bar.html'
