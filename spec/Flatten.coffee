@@ -459,6 +459,39 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+    it 'should not strip br from p', (done) ->
+
+      sent =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          html: """
+          <blockquote><p>one<br>two</p></blockquote>
+          <p>three<br />four</p>
+          """
+        ]
+
+      expected =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          content: [
+              type: 'quote'
+              html: """
+              <blockquote><p>one<br>two</p></p></blockquote>
+              """
+            ,
+              type: 'text'
+              html: """
+              <p>three<br />four</p>
+              """
+          ]
+        ]
+
+      f.processPage sent, (data) ->
+        chai.expect(data).to.deep.eql expected
+        done()
+
     it 'should be able to detect iframe videos', (done) ->
       sent =
         path: 'foo/bar.html'
