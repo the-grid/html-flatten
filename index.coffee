@@ -402,7 +402,7 @@ module.exports = class Flatten
     html = "<#{tag.name}#{attributes}>"
     if tag.children
       content = ''
-      for child, index in tag.children
+      for child in tag.children
         # Allow internal line breaks
         if child.name is 'br' and content isnt ''
           content += '<br>'
