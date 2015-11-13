@@ -478,12 +478,12 @@ describe 'Flatten', ->
           content: [
               type: 'quote'
               html: """
-              <blockquote><p>one<br>two</p></p></blockquote>
+              <blockquote><p>one<br>two</p></blockquote>
               """
             ,
               type: 'text'
               html: """
-              <p>three<br />four</p>
+              <p>three<br>four</p>
               """
           ]
         ]
