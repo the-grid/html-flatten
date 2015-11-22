@@ -402,9 +402,9 @@ module.exports = class Flatten
     html = "<#{tag.name}#{attributes}>"
     if tag.children
       content = ''
-      for child in tag.children
+      for child, index in tag.children
         # Allow internal line breaks
-        if child.name is 'br' and content isnt ''
+        if child.name is 'br' and content isnt '' and index isnt tag.children.length-1
           content += '<br>'
           continue
         content += @tagToHtml child, id, keepCaption

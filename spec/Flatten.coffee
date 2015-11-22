@@ -468,6 +468,8 @@ describe 'Flatten', ->
           html: """
           <blockquote><p>one<br>two</p></blockquote>
           <p>three<br />four</p>
+          <p><br></p>
+          <ul><li>br at end<br></li></ul>
           """
         ]
 
@@ -477,14 +479,13 @@ describe 'Flatten', ->
           id: 'main'
           content: [
               type: 'quote'
-              html: """
-              <blockquote><p>one<br>two</p></blockquote>
-              """
+              html: "<blockquote><p>one<br>two</p></blockquote>"
             ,
               type: 'text'
-              html: """
-              <p>three<br>four</p>
-              """
+              html: "<p>three<br>four</p>"
+            ,
+              type: 'list'
+              html: "<ul><li>br at end</li></ul>"
           ]
         ]
 
