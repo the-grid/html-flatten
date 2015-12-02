@@ -470,6 +470,7 @@ describe 'Flatten', ->
           <p>three<br />four</p>
           <p><br></p>
           <ul><li>br at end<br></li></ul>
+          <p>multiple<br><br>breaks</p>
           """
         ]
 
@@ -486,6 +487,9 @@ describe 'Flatten', ->
             ,
               type: 'list'
               html: "<ul><li>br at end</li></ul>"
+            ,
+              type: 'text'
+              html: "<p>multiple<br>breaks</p>"
           ]
         ]
 
