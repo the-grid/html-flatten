@@ -45,7 +45,7 @@
     "mocha": "2.3.3",
     "chai": "3.3.0",
     "grunt-browserify": "4.0.1",
-    "coffeeify": "1.1.0",
+    "coffeeify": "2.0.0",
     "brfs": "1.4.1"
   }
 }
