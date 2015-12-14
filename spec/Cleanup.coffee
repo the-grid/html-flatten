@@ -29,6 +29,33 @@ describe 'Cleanup', ->
         chai.expect(item).to.eql expected
         done()
 
+  describe 'cleaning a block structure with placeholder', ->
+    it 'should keep things as they are', (done) ->
+      item =
+        content: [
+          id: 'foo'
+          type: 'h1'
+          html: '<h1>Hello world!</h1>'
+          metadata:
+            title: 'Foo'
+        ,
+          id: 'baz'
+          type: 'placeholder'
+          html: ''
+        ,
+          id: 'bar'
+          type: 'text'
+          html: '<p>This is some text</p>'
+          metadata:
+            title: 'Bar'
+        ]
+      expected = JSON.parse JSON.stringify item
+      expected.content[0].text = 'Hello world!'
+
+      f.flattenItem item, ->
+        chai.expect(item).to.eql expected
+        done()
+
   describe 'cleaning a dirty HTML structure', ->
     it 'should produce clean blocks', (done) ->
       item =

@@ -103,6 +103,10 @@ module.exports = class Flatten
     do iteration
 
   cleanUpBlock: (block, item, callback) ->
+    if block.type is 'placeholder'
+      block.html = ''
+      do callback
+      return
     handler = new htmlparser.DefaultHandler (err, dom) =>
       blocks = []
       for tag in dom
