@@ -41,7 +41,6 @@
     "coffeelint": "1.13.0",
     "grunt-coffeelint": "0.0.13",
     "grunt-mocha-phantomjs": "0.6.2",
-    "phantomjs": "~1.9.1",
     "grunt-contrib-nodeunit": "0.4.1",
     "mocha": "2.3.3",
     "chai": "3.3.0",
