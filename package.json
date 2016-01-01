@@ -46,6 +46,6 @@
     "chai": "3.3.0",
     "grunt-browserify": "4.0.1",
     "coffeeify": "1.1.0",
-    "brfs": "1.4.1"
+    "brfs": "1.4.2"
   }
 }
