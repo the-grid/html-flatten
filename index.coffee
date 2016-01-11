@@ -167,6 +167,7 @@ module.exports = class Flatten
     if tag.name in @structuralTags
       return results unless tag.children
       for child in tag.children
+        continue if child.type is 'text'
         normalized = @normalizeTag child, id
         continue unless normalized
         results = results.concat normalized
