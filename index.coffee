@@ -8,6 +8,8 @@ module.exports = class Flatten
     '!DOCTYPE'
     'html'
     'head'
+    'link'
+    'style'
     'title'
     'body'
     'div'
