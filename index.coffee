@@ -5,6 +5,7 @@ uri = require 'urijs'
 module.exports = class Flatten
   structuralTags: [
     '?xml'
+    '!DOCTYPE'
     'html'
     'head'
     'title'
@@ -20,6 +21,7 @@ module.exports = class Flatten
     'meta'
     's'
     'small'
+    'script'
   ]
   ignoredAttribs: [
     'data-query-source'
