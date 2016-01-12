@@ -150,7 +150,7 @@ module.exports = class Flatten
 
   normalizeUrl: (url, base) ->
     return url unless base
-    return url unless url
+    return '' unless url
     parsed = uri url
     return url if parsed.protocol() in ['javascript', 'mailto', 'data', 'blob', 'filesystem', 'file', 'chrome-extension', 'filesystem:chrome-extension']
     abs = parsed.absoluteTo(base).toString()

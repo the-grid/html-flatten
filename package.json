@@ -1,6 +1,6 @@
 {
   "name": "html-flatten",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "flattens arbitrary html into a sane structure",
   "main": "build/flatten-html.js",
   "scripts": {
