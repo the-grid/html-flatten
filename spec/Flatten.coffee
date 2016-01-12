@@ -12,7 +12,7 @@ describe 'Flatten', ->
         id: 'main'
         html: """
         <script>alert('foo');</script>
-        <p>Hello world, <b>this</b> is some text</p>
+        <p>Hello world, <b>this</b> is <span>some</span> text</p>
         <video src="http://foo.bar"></video>
         <video autoplay="true" loop="true" controls="false">
           <source type="video/mp4" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4"/>
