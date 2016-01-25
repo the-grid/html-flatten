@@ -52,7 +52,8 @@ describe 'Flatten', ->
           html: '<button data-uuid="71bfc2e0-4a96-11e4-916c-0800200c9a66" data-role="cta" data-verb="purchase" data-price="96">Buy now</button>'
         ]
 
-      f.processPage sent, (data) ->
+      f.flattenItem sent, (err, data) ->
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -95,9 +96,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -152,9 +154,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -188,9 +191,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -226,9 +230,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'URL normalization'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -256,7 +261,8 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -293,9 +299,10 @@ describe 'Flatten', ->
       if console.timeEnd
         console.time 'flattening headlines and paragraphs'
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening headlines and paragraphs'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -323,7 +330,8 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -358,9 +366,10 @@ describe 'Flatten', ->
       if console.timeEnd
         console.time 'flattening lists'
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening lists'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -397,9 +406,10 @@ describe 'Flatten', ->
 
       if console.timeEnd
         console.time 'flattening lists'
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening lists'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -427,9 +437,10 @@ describe 'Flatten', ->
 
       if console.timeEnd
         console.time 'flattening formatting'
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening formatting'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -456,7 +467,8 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -495,7 +507,8 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -526,9 +539,10 @@ describe 'Flatten', ->
 
       if console.timeEnd
         console.time 'flattening iframes'
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening iframes'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -580,8 +594,9 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         chai.expect(data).to.deep.eql expected
+        return done err if err
         done()
 
   describe 'flattening Twitter-style HTML structures', ->
@@ -605,9 +620,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -640,9 +656,10 @@ describe 'Flatten', ->
           ]
         ]
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
+        return done err if err
         chai.expect(data).to.deep.eql expected
         done()
 
@@ -661,7 +678,8 @@ describe 'Flatten', ->
         path: 'foo/bar.html'
         html: html
 
-      f.processPage sent, (data) ->
+      f.processPage sent, (err, data) ->
+        return done err if err
         images = data.content.filter (block) -> block.type is 'image'
         chai.expect(images.length).to.equal 6
         srcs = images.map (image) -> image.src

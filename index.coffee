@@ -1,6 +1,7 @@
 htmlparser = require 'htmlparser'
 entities = require 'entities'
 uri = require 'urijs'
+Promise = require 'bluebird'
 
 module.exports = class Flatten
   structuralTags: [
@@ -71,21 +72,21 @@ module.exports = class Flatten
 
   processPage: (page, callback) ->
     if page.html and not page.items
-      @flattenItem page, ->
-        callback page
+      @flattenItem page, (err) ->
+        return callback err if err
+        callback null, page
       return
 
     unless page.items?.length
-      callback page
+      callback null, page
       return
 
-    toDo = page.items.length
-
-    for item in page.items
-      @flattenItem item, ->
-        toDo--
-        return unless toDo is 0
-        callback page
+    flattenItem = Promise.promisify @flattenItem.bind @
+    Promise.map page.items, (item) ->
+      flattenItem item
+    .nodeify (err) ->
+      return callback err if err
+      callback null, page
 
   flattenItem: (item, callback) ->
     if item.content and not item.html
@@ -104,23 +105,22 @@ module.exports = class Flatten
         for block in normalized
           item.content.push block
       delete item.html
-      do callback
+      callback null, item
     ,
       ignoreWhitespace: true
     parser = new htmlparser.Parser handler
     parser.parseComplete item.html
 
   cleanUpItem: (item, callback) ->
-    todo = item.content.slice 0
-    iteration = =>
-      unless todo.length
-        do callback
-        return
-      block = todo.shift()
-      @cleanUpBlock block, item, iteration
-    do iteration
+    cleanUp = Promise.promisify @cleanUpBlock.bind @
+    Promise.map item.content, (block) ->
+      cleanUp block, item
+    .nodeify (err) ->
+      return callback err if err
+      callback null, item
 
   cleanUpBlock: (block, item, callback) ->
+    return callback null unless block
     if block.type is 'placeholder'
       block.html = ''
       do callback

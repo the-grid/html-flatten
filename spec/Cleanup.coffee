@@ -25,7 +25,8 @@ describe 'Cleanup', ->
       expected = JSON.parse JSON.stringify item
       expected.content[0].text = 'Hello world!'
 
-      f.flattenItem item, ->
+      f.flattenItem item, (err) ->
+        return done err if err
         chai.expect(item).to.eql expected
         done()
 
@@ -52,7 +53,8 @@ describe 'Cleanup', ->
       expected = JSON.parse JSON.stringify item
       expected.content[0].text = 'Hello world!'
 
-      f.flattenItem item, ->
+      f.flattenItem item, (err) ->
+        return done err if err
         chai.expect(item).to.eql expected
         done()
 
@@ -73,7 +75,8 @@ describe 'Cleanup', ->
             title: 'Bar'
         ]
       orig = JSON.parse JSON.stringify item
-      f.flattenItem item, ->
+      f.flattenItem item, (err) ->
+        return done err if err
         chai.expect(item.content.length).to.equal 3
         chai.expect(item.content[0]).to.eql
           id: 'foo'
@@ -103,7 +106,8 @@ describe 'Cleanup', ->
           html: '<blockquote><p data-grid-id="099b7305-7631-45cf-9b00-a553baa5da47">A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.</p><p data-grid-id="bcdd91f9-e33e-48ee-b0f8-f85929ef34ba"></p><p data-grid-id="d1b31853-a2d7-4a77-a1f6-2830ec4b13c2"></p></blockquote>'
         ]
       orig = JSON.parse JSON.stringify item
-      f.flattenItem item, ->
+      f.flattenItem item, (err) ->
+        return done err if err
         chai.expect(item.content.length).to.equal 2
         chai.expect(item.content[0]).to.eql
           id: 'foo'
@@ -125,7 +129,8 @@ describe 'Cleanup', ->
       path = require 'path'
       item = JSON.parse fs.readFileSync __dirname+'/fixtures/put.json', 'utf-8'
       orig = JSON.parse JSON.stringify item
-      f.flattenItem item, ->
+      f.flattenItem item, (err) ->
+        return done err if err
         types = item.content.map (b) -> b.type
         chai.expect(types).to.eql [
           'image'
