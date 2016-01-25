@@ -25,9 +25,23 @@ module.exports = class Flatten
     'small'
     'script'
   ]
+  blockLevel: [
+    'p'
+    'h1'
+    'h2'
+    'h3'
+    'h4'
+    'h5'
+    'h6'
+    'h7'
+    'div'
+    'blockquote'
+    'pre'
+  ]
   ignoredAttribs: [
     'data-query-source'
     'data-expanded-url'
+    'data-grid-id'
   ]
   allowedAttribs: [
     'src'
@@ -346,6 +360,7 @@ module.exports = class Flatten
         results.push
           type: 'quote'
           html: @tagToHtml tag, id
+          text: @tagToText tag
       when 'table'
         results.push
           type: 'table'
@@ -392,17 +407,27 @@ module.exports = class Flatten
     return false unless attribute in @allowedAttribs
     true
 
-  tagToHtml: (tag, id, keepCaption = false) ->
+  tagToHtml: (tag, id, keepCaption = false, allowBlock = true) ->
     if tag.type is 'text'
       return '' unless tag.data
       return '' if tag.data.trim() is ''
       return '' if tag.data is '&nbsp;'
       return tag.data
+    allowSubBlock = tag.name in ['video', 'article', 'figure', 'blockquote']
+
+    if tag.name in @blockLevel and not tag.children
+      return ''
+
     if tag.name in @structuralTags or (tag.name in ['figcaption'] and not keepCaption)
       return '' unless tag.children
       content = ''
       for child in tag.children
-        content += @tagToHtml child, id, keepCaption
+        content += @tagToHtml child, id, keepCaption, allowSubBlock
+      return content
+    if tag.name in @blockLevel and not allowBlock
+      content = ''
+      for child in tag.children
+        content += @tagToHtml child, id, keepCaption, allowSubBlock
       return content
 
     attributes = ''
@@ -424,7 +449,7 @@ module.exports = class Flatten
           if nextSibling and nextSibling.name isnt 'br'
             content += '<br>'
             continue
-        content += @tagToHtml child, id, keepCaption
+        content += @tagToHtml child, id, keepCaption, allowSubBlock
       html += content
     if tag.name isnt 'img' and tag.name isnt 'source'
       html += "</#{tag.name}>"
@@ -434,6 +459,8 @@ module.exports = class Flatten
     text = ''
     if tag.type is 'text'
       return entities.decodeHTML tag.data
+    if tag.name is 'br'
+      return ' '
     if tag.children
       for child in tag.children
         text += @tagToText child

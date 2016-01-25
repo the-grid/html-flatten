@@ -88,6 +88,37 @@ describe 'Cleanup', ->
         chai.expect(item.content[2]).to.eql orig.content[1]
         done()
 
+  describe 'cleaning a block inside a block', ->
+    it 'should produce a clean block', (done) ->
+      item =
+        content: [
+          id: 'foo'
+          type: 'h1'
+          html: '<h1><p data-grid-id="1d6da340-4dc3-4979-b14a-e676bd6d829b">Welcome to a Digital Solutions agency that specialize in cost effective SEO, SEM, SMM, Branding, Planning, Content, Automation, Programmatic, Web and App Development, Metrics and Purchasing</p></h1>'
+          metadata:
+            title: 'Foo'
+        ,
+          id: 'bar'
+          type: 'quote'
+          html: '<blockquote><p data-grid-id="099b7305-7631-45cf-9b00-a553baa5da47">A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.</p><p data-grid-id="bcdd91f9-e33e-48ee-b0f8-f85929ef34ba"></p><p data-grid-id="d1b31853-a2d7-4a77-a1f6-2830ec4b13c2"></p></blockquote>'
+        ]
+      orig = JSON.parse JSON.stringify item
+      f.flattenItem item, ->
+        chai.expect(item.content.length).to.equal 2
+        chai.expect(item.content[0]).to.eql
+          id: 'foo'
+          type: 'h1'
+          html: '<h1>Welcome to a Digital Solutions agency that specialize in cost effective SEO, SEM, SMM, Branding, Planning, Content, Automation, Programmatic, Web and App Development, Metrics and Purchasing</h1>'
+          text: 'Welcome to a Digital Solutions agency that specialize in cost effective SEO, SEM, SMM, Branding, Planning, Content, Automation, Programmatic, Web and App Development, Metrics and Purchasing'
+          metadata:
+            title: 'Foo'
+        chai.expect(item.content[1]).to.eql
+          id: 'bar'
+          type: 'quote'
+          html: '<blockquote><p>A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.</p></blockquote>'
+          text: 'A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.'
+        done()
+
   describe 'cleaning up a full item', ->
     it 'should produce clean blocks', (done) ->
       fs = require 'fs'

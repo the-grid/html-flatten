@@ -450,8 +450,9 @@ describe 'Flatten', ->
           content: [
             type: 'quote'
             html: """
-            <blockquote><p data-grid-id="0123">block quote</p></blockquote>
+            <blockquote><p>block quote</p></blockquote>
             """
+            text: 'block quote'
           ]
         ]
 
@@ -481,6 +482,7 @@ describe 'Flatten', ->
           content: [
               type: 'quote'
               html: "<blockquote><p>one<br>two</p></blockquote>"
+              text: 'one two'
             ,
               type: 'text'
               html: "<p>three<br>four</p>"
