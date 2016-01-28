@@ -44,7 +44,7 @@
     "grunt-mocha-phantomjs": "0.6.2",
     "grunt-contrib-nodeunit": "0.4.1",
     "mocha": "2.3.3",
-    "chai": "3.3.0",
+    "chai": "3.5.0",
     "grunt-browserify": "4.0.1",
     "coffeeify": "1.1.0",
     "brfs": "1.4.1"
