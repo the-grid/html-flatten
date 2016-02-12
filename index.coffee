@@ -229,6 +229,11 @@ module.exports = class Flatten
             type: 'video'
             video: tag.attribs.src
             html: @tagToHtml tag, id
+        else if tag.attribs.src.indexOf('livestream.com') isnt -1
+          results.push
+            type: 'video'
+            video: tag.attribs.src
+            html: @tagToHtml tag, id
         else if tag.attribs.src.indexOf('maps.google.') isnt -1
           results.push
             type: 'location'
