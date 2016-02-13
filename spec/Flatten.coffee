@@ -70,6 +70,7 @@ describe 'Flatten', ->
           <figure><iframe frameborder="0" src="http://www.youtube.com/embed/YzC7MfCtkzo"></iframe></figure>
           <figure><img alt=\"An illustration of NoFlo used to create a flow-based version of the Jekyll tool for converting text into content suitable for Web publishing.\" src=\"http://cnet3.cbsistatic.com/hub/i/r/2013/09/10/92df7aec-6ddf-11e3-913e-14feb5ca9861/resize/620x/929f354f66ca3b99ab045f6f15a6693a/noflo-jekyll.png\">An illustration of NoFlo used to create a flow-based version of the Jekyll tool for converting text into content suitable for Web publishing.</figure>
           <figure><div><img src=\"http://timenewsfeed.files.wordpress.com/2012/02/slanglol.jpg?w=480&amp;h=320&amp;crop=1\"></div>\n<figcaption><small>Tom Turley / <a href=\"http://www.gettyimages.com/\">Getty Images</a></small></figcaption></figure>
+          <figure><img src=\"http://a.com/b.jpg\"><figcaption><h1>Title</h1><p>Desc</p></figcaption></figure>
           """
         ]
 
@@ -93,6 +94,11 @@ describe 'Flatten', ->
             src: 'http://timenewsfeed.files.wordpress.com/2012/02/slanglol.jpg?w=480&amp;h=320&amp;crop=1'
             caption: 'Tom Turley / <a href="http://www.gettyimages.com/">Getty Images</a>'
             html: "<figure><img src=\"http://timenewsfeed.files.wordpress.com/2012/02/slanglol.jpg?w=480&amp;h=320&amp;crop=1\"><figcaption>Tom Turley / <a href=\"http://www.gettyimages.com/\">Getty Images</a></figcaption></figure>"
+          ,
+            type: 'image'
+            src: 'http://a.com/b.jpg'
+            caption: '<h1>Title</h1><p>Desc</p>'
+            html: "<figure><img src=\"http://a.com/b.jpg\"><figcaption><h1>Title</h1><p>Desc</p></figcaption></figure>"
           ]
         ]
 
