@@ -167,7 +167,11 @@ module.exports = class Flatten
     return '' unless url
     parsed = uri url
     return url if parsed.protocol() in ['javascript', 'mailto', 'data', 'blob', 'filesystem', 'file', 'chrome-extension', 'filesystem:chrome-extension']
-    abs = parsed.absoluteTo(base).toString()
+    try
+      abs = parsed.absoluteTo(base).toString()
+    catch e
+      console.log url, e
+      return url
     abs
 
   normalizeTag: (tag, id) ->
