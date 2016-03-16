@@ -266,6 +266,34 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+    it 'should decode entities in attributes', (done) ->
+      sent =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          html: """
+          <img src="http://foo.bar/j.jpg" alt="An image &amp; &lt;stuff&gt;" title="&yuml;o" data-foo="bar">
+          """
+        ]
+
+      expected =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          content: [
+            src: 'http://foo.bar/j.jpg'
+            type: 'image'
+            title: 'ÿo'
+            caption: 'An image & <stuff>'
+            html: '<img src="http://foo.bar/j.jpg" alt="An image &amp; &lt;stuff&gt;" title="&yuml;o" data-foo="bar">'
+          ]
+        ]
+
+      f.processPage sent, (err, data) ->
+        return done err if err
+        chai.expect(data).to.deep.eql expected
+        done()
+
     it 'should be able to flatten headlines and paragraphs', (done) ->
       sent =
         path: 'foo/bar.html'
