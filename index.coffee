@@ -1,5 +1,5 @@
 htmlparser = require 'htmlparser'
-entities = require 'entities'
+he = require 'he'
 uri = require 'urijs'
 Promise = require 'bluebird'
 
@@ -265,8 +265,8 @@ module.exports = class Flatten
           type: 'image'
           src: tag.attribs.src
           html: @tagToHtml tag, id
-        img.title = entities.decodeHTML(tag.attribs.title) if tag.attribs.title
-        img.caption = entities.decodeHTML(tag.attribs.alt) if tag.attribs.alt
+        img.title = he.decode(tag.attribs.title) if tag.attribs.title
+        img.caption = he.decode(tag.attribs.alt) if tag.attribs.alt
         results.push img
       when 'figure'
         return results unless tag.children
@@ -294,7 +294,7 @@ module.exports = class Flatten
           type: type
           src: src
           html: @tagToHtml tag, id, true
-        img.caption = entities.decodeHTML(caption) if caption
+        img.caption = he.decode(caption) if caption
         results.push img
       when 'article'
         return results unless tag.children
@@ -315,8 +315,8 @@ module.exports = class Flatten
          article =
            type: 'article'
            html: @tagToHtml tag, id
-         article.title = entities.decodeHTML(title) if title
-         article.caption = entities.decodeHTML(caption) if caption
+         article.title = he.decode(title) if title
+         article.caption = he.decode(caption) if caption
          article.src = src if src
          results.push article
       when 'p', 'em', 'small'
@@ -472,7 +472,7 @@ module.exports = class Flatten
   tagToText: (tag) ->
     text = ''
     if tag.type is 'text'
-      return entities.decodeHTML tag.data
+      return he.decode tag.data
     if tag.name is 'br'
       return ' '
     if tag.children
