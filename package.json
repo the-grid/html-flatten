@@ -42,7 +42,7 @@
     "coffeelint": "1.15.0",
     "grunt-coffeelint": "0.0.13",
     "grunt-coffeelint": "0.0.15",
-    "grunt-mocha-phantomjs": "0.6.2",
+    "grunt-mocha-phantomjs": "3.0.0",
     "grunt-contrib-nodeunit": "1.0.0",
     "mocha": "2.4.5",
     "chai": "3.3.0",
