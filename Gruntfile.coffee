@@ -27,6 +27,7 @@ module.exports = ->
     mocha_phantomjs:
       options:
         output: 'spec/result.xml'
+        failWithOutput: true
         reporter: 'spec'
       all: ['spec/runner.html']
 
