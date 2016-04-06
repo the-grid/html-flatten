@@ -242,6 +242,10 @@ module.exports = class Flatten
           results.push
             type: 'location'
             html: @tagToHtml tag, id
+        else if tag.attribs.src.indexOf('www.google.com%2Fmaps') isnt -1
+          results.push
+            type: 'location'
+            html: @tagToHtml tag, id
         else if tag.attribs.src.indexOf('soundcloud.com') isnt -1
           results.push
             type: 'audio'
