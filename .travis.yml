@@ -8,7 +8,7 @@ deploy:
   provider: npm
   email: henri.bergius@iki.fi
   api_key:
-    secure: KWr3py5VyOGwc30XAHa5Fk/58x3JmeV0xG4ShligLKsKvhAEliffEt/+yJ43+nCQSUpv2VRwA/1vYkBPz/o2r/ZaBvyJRuZG0p22SczKwJ08ALVun7ZVlRl85zxsrAbctO4gRYjO6ph2yW/rKnO50VKany4LgyIvIhasoPftfak=
+    secure: cbKlb8DOVjiEqrauh8b9iCjW1txizd2D8fPEOf0tuevlmijil28sP6bkddcCmdqUP5uI9PimoTTUC1cBH1aWk7MTXzqcDNeO5ty1YkN188L0mXmbz+gMtGIm6MRrYWVzAWdmMUlDjpLZGxCFMm/pGPwdt29FFOCwvH7VdINFNzY=
   on:
     tags: true
     repo: the-grid/html-flatten
