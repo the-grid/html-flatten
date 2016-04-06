@@ -9,6 +9,7 @@ deploy:
   email: henri.bergius@iki.fi
   api_key:
     secure: cbKlb8DOVjiEqrauh8b9iCjW1txizd2D8fPEOf0tuevlmijil28sP6bkddcCmdqUP5uI9PimoTTUC1cBH1aWk7MTXzqcDNeO5ty1YkN188L0mXmbz+gMtGIm6MRrYWVzAWdmMUlDjpLZGxCFMm/pGPwdt29FFOCwvH7VdINFNzY=
+  skip_cleanup: true
   on:
     tags: true
     repo: the-grid/html-flatten
