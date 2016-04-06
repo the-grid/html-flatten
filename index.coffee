@@ -1,6 +1,7 @@
 htmlparser = require 'htmlparser'
 he = require 'he'
 uri = require 'urijs'
+urlParser = require 'url'
 Promise = require 'bluebird'
 
 module.exports = class Flatten
@@ -203,63 +204,12 @@ module.exports = class Flatten
       when 'iframe'
         return results unless tag.attribs
         tag.attribs.src = @normalizeUrl tag.attribs.src, id
-        if tag.attribs.src.indexOf('vimeo.com') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('youtube.com') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('vine.co') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('fast.wistia.net') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('i.imgur.com') isnt -1 and tag.attribs.src.indexOf('gifv') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('cdninstagram.com') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('livestream.com') isnt -1
-          results.push
-            type: 'video'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('maps.google.') isnt -1
-          results.push
-            type: 'location'
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('www.google.com%2Fmaps') isnt -1
-          results.push
-            type: 'location'
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('soundcloud.com') isnt -1
-          results.push
-            type: 'audio'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else if tag.attribs.src.indexOf('bandcamp.com') isnt -1
-          results.push
-            type: 'audio'
-            video: tag.attribs.src
-            html: @tagToHtml tag, id
-        else
-          results.push
-            type: 'interactive'
-            html: @tagToHtml tag, id
+        type = @classifyIframe tag.attribs.src
+        block =
+          type: @classifyIframe tag.attribs.src
+          html: @tagToHtml tag, id
+        block.video = tag.attribs.src if block.type in ['video', 'audio']
+        results.push block
       when 'img'
         return results unless tag.attribs
         tag.attribs.src = @normalizeUrl tag.attribs.src, id
@@ -424,6 +374,28 @@ module.exports = class Flatten
       return true
     return false unless attribute in @allowedAttribs
     true
+
+  classifyIframe: (url) ->
+    parsed = urlParser.parse url, true, true
+    return 'interactive' unless parsed.hostname
+
+    if parsed.hostname is 'cdn.embedly.com' and parsed.query.src
+      return @classifyIframe parsed.query.src
+
+    return 'video' if parsed.hostname.indexOf('youtube.com') isnt -1
+    return 'video' if parsed.hostname.indexOf('vimeo.com') isnt -1
+    return 'video' if parsed.hostname.indexOf('vine.co') isnt -1
+    return 'video' if parsed.hostname.indexOf('wistia.com') isnt -1
+    return 'video' if parsed.hostname.indexOf('wistia.net') isnt -1
+    return 'video' if parsed.hostname.indexOf('imgur.com') isnt -1
+    return 'video' if parsed.hostname.indexOf('cdninstagram.com') isnt -1
+    return 'video' if parsed.hostname.indexOf('livestream.com') isnt -1
+    return 'audio' if parsed.hostname.indexOf('soundcloud.com') isnt -1
+    return 'audio' if parsed.hostname.indexOf('bandcamp.com') isnt -1
+    return 'location' if parsed.hostname.indexOf('maps.google.') isnt -1
+    return 'location' if parsed.hostname.indexOf('www.google.com') isnt -1 and parsed.pathname.indexOf('/maps') isnt -1
+
+    return 'interactive'
 
   tagToHtml: (tag, id, keepCaption = false, allowBlock = true) ->
     if tag.type is 'text'
