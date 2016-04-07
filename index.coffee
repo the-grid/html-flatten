@@ -179,13 +179,15 @@ module.exports = class Flatten
     results = []
 
     if tag.type is 'text'
+      html = @tagToHtml tag, id
+      return results unless html.length
       results.push
         type: 'text'
         html: @tagToHtml tag, id
       return results
 
     if tag.name in @structuralTags
-      return results unless tag.children
+      return results unless tag.children?.length
       for child in tag.children
         continue if child.type is 'text'
         normalized = @normalizeTag child, id
@@ -215,6 +217,7 @@ module.exports = class Flatten
         tag.attribs.src = @normalizeUrl tag.attribs.src, id
         if tag.attribs.src is 'http://en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1'
           return results
+        return results unless tag.attribs.src
         img =
           type: 'image'
           src: tag.attribs.src
@@ -223,7 +226,7 @@ module.exports = class Flatten
         img.caption = he.decode(tag.attribs.alt) if tag.attribs.alt
         results.push img
       when 'figure'
-        return results unless tag.children
+        return results unless tag.children?.length
         type = 'image'
         src = undefined
         caption = null
@@ -251,7 +254,7 @@ module.exports = class Flatten
         img.caption = he.decode(caption) if caption
         results.push img
       when 'article'
-        return results unless tag.children
+        return results unless tag.children?.length
         caption = null
         title = null
         src = null
@@ -274,7 +277,7 @@ module.exports = class Flatten
          article.src = src if src
          results.push article
       when 'p', 'em', 'small'
-        return unless tag.children
+        return unless tag.children?.length
         hasContent = false
         normalized = []
         remove = []
@@ -303,7 +306,7 @@ module.exports = class Flatten
 
         # If we have other stuff too, then return them as-is
         html = @tagToHtml tag, id
-        unless html is '<p></p>'
+        unless html in ['<p></p>', '']
           results.push
             type: 'text'
             html: html
@@ -338,7 +341,7 @@ module.exports = class Flatten
           type: 'time'
           html: @tagToHtml tag, id
       when 'a'
-        return results unless tag.children
+        return results unless tag.children?.length
         if tag.attribs?.href
           tag.attribs.href = @normalizeUrl tag.attribs.href, id
         normalizedChildren = []
@@ -405,11 +408,11 @@ module.exports = class Flatten
       return tag.data
     allowSubBlock = tag.name in ['video', 'article', 'figure', 'blockquote']
 
-    if tag.name in @blockLevel and not tag.children
+    if tag.name in @blockLevel and not tag.children?.length
       return ''
 
     if tag.name in @structuralTags or (tag.name in ['figcaption'] and not keepCaption)
-      return '' unless tag.children
+      return '' unless tag.children?.length
       content = ''
       for child in tag.children
         content += @tagToHtml child, id, keepCaption, allowSubBlock
@@ -428,7 +431,10 @@ module.exports = class Flatten
           val = @normalizeUrl val, id
         if tag.name is 'img' and attrib is 'src'
           val = @normalizeUrl val, id
-        attributes += " #{attrib}=\"#{val}\""
+        if val or attrib in ['alt', 'title']
+          attributes += " #{attrib}=\"#{val}\""
+        else
+          attributes += " #{attrib}"
     html = "<#{tag.name}#{attributes}>"
     if tag.children
       content = ''
@@ -451,7 +457,7 @@ module.exports = class Flatten
       return he.decode tag.data
     if tag.name is 'br'
       return ' '
-    if tag.children
+    if tag.children?.length
       for child in tag.children
         text += @tagToText child
     text
