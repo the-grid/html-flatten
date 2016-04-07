@@ -1,4 +1,4 @@
-htmlparser = require 'htmlparser'
+htmlparser = require 'htmlparser2'
 he = require 'he'
 uri = require 'urijs'
 urlParser = require 'url'
