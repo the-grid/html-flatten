@@ -52,7 +52,6 @@ module.exports = ->
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-mocha-test'
-  @loadNpmTasks 'grunt-contrib-nodeunit'
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-coffeelint'
   @loadNpmTasks 'grunt-browserify'
