@@ -310,6 +310,7 @@ module.exports = class Flatten
           results.push
             type: 'text'
             html: html
+            text: @tagToText tag
 
         if normalized.length
           results.push n for n in normalized
@@ -317,7 +318,7 @@ module.exports = class Flatten
         normalized =
           type: tag.name
           html: @tagToHtml tag, id
-        normalized.text = @tagToText tag
+          text: @tagToText tag
         results.push normalized
       when 'pre'
         results.push
@@ -454,6 +455,8 @@ module.exports = class Flatten
   tagToText: (tag) ->
     text = ''
     if tag.type is 'text'
+      tag.data = '' unless tag.data
+      tag.data = tag.data.replace '&nbsp;', ' '
       return he.decode tag.data
     if tag.name is 'br'
       return ' '

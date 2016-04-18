@@ -28,6 +28,7 @@ describe 'Flatten', ->
         content: [
           type: 'text'
           html: '<p>Hello world, <b>this</b> is some text</p>'
+          text: 'Hello world, this is some text'
         ,
           type: 'video'
           video: 'http://foo.bar/'
@@ -80,6 +81,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
+            text: 'Hello world, this is some text'
           ,
             type: 'video'
             video: 'http://www.youtube.com/embed/YzC7MfCtkzo'
@@ -129,6 +131,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
+            text: 'Hello world, this is some text'
           ,
             type: 'video'
             video: '//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2F8Dos61_6sss%3Ffeature%3Doembed&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D8Dos61_6sss&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2F8Dos61_6sss%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube'
@@ -185,9 +188,11 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
+            text: 'Hello world, this is some text'
           ,
             type: 'text'
             html: '<p>Another exciting new product is <a href="http://noflojs.org/">NoFlo,</a> a flow-based Javascript programming tool. Developed as the result of a successful Kickstarter campaign (disclosure: I was a backer), it highlights both the dissatisfaction with the currently available tools, and the untapped potential for flow-based programming tools, that could be more easily understood by non-programmers. NoFlo builds upon Node.js to deliver functional apps to the browser. Native output to Android and iOS is in the works.</p>'
+            text: 'Another exciting new product is NoFlo, a flow-based Javascript programming tool. Developed as the result of a successful Kickstarter campaign (disclosure: I was a backer), it highlights both the dissatisfaction with the currently available tools, and the untapped potential for flow-based programming tools, that could be more easily understood by non-programmers. NoFlo builds upon Node.js to deliver functional apps to the browser. Native output to Android and iOS is in the works.'
           ,
             type: 'image'
             src: 'http://netdna.webdesignerdepot.com/uploads/2014/07/0091.jpg'
@@ -223,6 +228,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
+            text: 'Hello world, this is some text'
           ,
             type: 'video'
             video: 'http://bergie.iki.fi/files/foo.mp4'
@@ -321,6 +327,7 @@ describe 'Flatten', ->
           ,
             type: 'text'
             html: '<p>Some text</p>'
+            text: 'Some text'
           ,
             type: 'h2'
             html: '<h2>Foo bar</h2>'
@@ -464,6 +471,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Afterwards, we\'ll be running a dojo. No prior experience with FP is needed for this part; we\'ll all be coming from different levels. Our goals here are to equip you with a more of an understanding of functional programming and it\'s real-world applications and to learn from each other. More than all that: to have some fun with FP!</p>'
+            text: 'Afterwards, we\'ll be running a dojo. No prior experience with FP is needed for this part; we\'ll all be coming from different levels. Our goals here are to equip you with a more of an understanding of functional programming and it\'s real-world applications and to learn from each other. More than all that: to have some fun with FP!'
           ]
         ]
 
@@ -530,12 +538,14 @@ describe 'Flatten', ->
             ,
               type: 'text'
               html: "<p>three<br>four</p>"
+              text: 'three four'
             ,
               type: 'list'
               html: "<ul><li>br at end</li></ul>"
             ,
               type: 'text'
               html: "<p>multiple<br>breaks</p>"
+              text: 'multiple  breaks'
           ]
         ]
 
@@ -609,6 +619,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
+            text: 'Hello world, this is some text'
           ,
             type: 'video'
             video: 'http://foo.bar/'
@@ -623,6 +634,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: '<p>Hello there</p>'
+            text: 'Hello there'
           ]
         ]
 
@@ -649,6 +661,7 @@ describe 'Flatten', ->
           content: [
             type: 'text'
             html: "<p>Help <a href=\"https://twitter.com/BUILDNational\">@<b>BUILDnational</b></a> win $500,000 in the <a href=\"https://twitter.com/hashtag/GoogleImpactChallenge?src=hash\">#<b>GoogleImpactChallenge</b></a>! VOTE here: <a href=\"http://t.co/7AzWeaex0D\" title=\"http://bit.ly/1h0KqKN\">http://bit.ly/1h0KqKN</a><a href=\"https://twitter.com/hashtag/BUILDgreaterimpact?src=hash\">#<b>BUILDgreaterimpact</b></a><a href=\"https://twitter.com/hashtag/togetherweBUILD?src=hash\">#<b>togetherweBUILD</b></a></p>"
+            text: 'Help @BUILDnational win $500,000 in the #GoogleImpactChallenge! VOTE here: http://bit.ly/1h0KqKN  #BUILDgreaterimpact #togetherweBUILD'
           ]
         ]
 
@@ -656,6 +669,7 @@ describe 'Flatten', ->
         if console.timeEnd
           console.timeEnd 'flattening HTML structures'
         return done err if err
+        chai.expect(data.items[0].content[0].text).to.equal expected.items[0].content[0].text
         chai.expect(data).to.deep.eql expected
         done()
 

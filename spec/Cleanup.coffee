@@ -24,6 +24,7 @@ describe 'Cleanup', ->
         ]
       expected = JSON.parse JSON.stringify item
       expected.content[0].text = 'Hello world!'
+      expected.content[1].text = 'This is some text'
 
       f.flattenItem item, (err) ->
         return done err if err
@@ -52,6 +53,7 @@ describe 'Cleanup', ->
         ]
       expected = JSON.parse JSON.stringify item
       expected.content[0].text = 'Hello world!'
+      expected.content[2].text = 'This is some text'
 
       f.flattenItem item, (err) ->
         return done err if err
@@ -88,6 +90,7 @@ describe 'Cleanup', ->
         chai.expect(item.content[1]).to.eql
           type: 'text'
           html: '<p>Foobar</p>'
+          text: 'Foobar'
         chai.expect(item.content[2]).to.eql orig.content[1]
         done()
 
