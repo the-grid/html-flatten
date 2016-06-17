@@ -709,6 +709,42 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+  describe 'flattening content with query-stringed image URL', ->
+    it 'should produce an article block', (done) ->
+      if console.timeEnd
+        console.time 'flattening HTML structures'
+      sent =
+        path: 'foo/bar.html'
+        items: [
+          id: 'http://html5doctor.com/the-article-element/'
+          html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article><article><h1>Red Delicious</h1><img src=\"https://imgflo.herokuapp.com/graph/vahj1ThiexotieMo/5764f83177c27abe632d7dce03e55e6d/noop.jpeg?input=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F1200%2F1*f7gpfegwe5jhpYs_1R_neA.jpeg\"><p>These bright red apples are the most common found in many supermarkets...</p></article>"
+        ]
+
+      expected =
+        path: 'foo/bar.html'
+        items: [
+          id: 'http://html5doctor.com/the-article-element/'
+          content: [
+            type: 'article'
+            html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article>"
+            title: 'Apple'
+            caption: 'The <b>apple</b> is the pomaceous fruit of the apple tree...'
+          ,
+            type: 'article'
+            html: "<article><h1>Red Delicious</h1><img src=\"https://imgflo.herokuapp.com/graph/vahj1ThiexotieMo/5764f83177c27abe632d7dce03e55e6d/noop.jpeg?input=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F1200%2F1*f7gpfegwe5jhpYs_1R_neA.jpeg\"><p>These bright red apples are the most common found in many supermarkets...</p></article>"
+            title: 'Red Delicious'
+            caption: 'These bright red apples are the most common found in many supermarkets...'
+            src: 'https://imgflo.herokuapp.com/graph/vahj1ThiexotieMo/5764f83177c27abe632d7dce03e55e6d/noop.jpeg?input=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F1200%2F1*f7gpfegwe5jhpYs_1R_neA.jpeg'
+          ]
+        ]
+
+      f.processPage sent, (err, data) ->
+        if console.timeEnd
+          console.timeEnd 'flattening HTML structures'
+        return done err if err
+        chai.expect(data).to.deep.eql expected
+        done()
+
   describe 'flattening a full XHTML file', ->
     # return if window?
     it 'should produce flattened contents', (done) ->
