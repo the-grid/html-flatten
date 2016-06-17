@@ -745,6 +745,38 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+  describe 'flattening content from Medium hosted image', ->
+    it 'should produce an article block', (done) ->
+      if console.timeEnd
+        console.time 'flattening HTML structures'
+      sent =
+        path: 'medium.html'
+        items: [
+          id: 'fake-medium'
+          html: "<figure><img src='https://cdn-images-1.medium.com/max/1200/1*f7gpfegwe5jhpYs_1R_neA.jpeg'></figure>"
+        ]
+
+      expected =
+        path: 'medium.html'
+        items: [
+          id: 'fake-medium'
+          content: [
+            type: 'image'
+            src: 'https://cdn-images-1.medium.com/max/1200/1*f7gpfegwe5jhpYs_1R_neA.jpeg'
+            html: "<figure><img src=\"https://cdn-images-1.medium.com/max/1200/1*f7gpfegwe5jhpYs_1R_neA.jpeg\"></figure>"
+          ]
+        ]
+
+      f.processPage sent, (err, data) ->
+        if console.timeEnd
+          console.timeEnd 'flattening HTML structures'
+        return done err if err
+        chai.expect(data).to.deep.eql expected
+        done()
+
+
+
+
   describe 'flattening a full XHTML file', ->
     # return if window?
     it 'should produce flattened contents', (done) ->
