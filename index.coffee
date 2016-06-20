@@ -201,6 +201,7 @@ module.exports = class Flatten
         video =
           type: 'video'
           html: @tagToHtml tag, id
+          src: tag.attribs.poster
         video.video = tag.attribs.src if tag.attribs.src
         results.push video
       when 'iframe'
