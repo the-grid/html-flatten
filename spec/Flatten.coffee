@@ -681,7 +681,7 @@ describe 'Flatten', ->
         path: 'foo/bar.html'
         items: [
           id: 'http://html5doctor.com/the-article-element/'
-          html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article><article><h1>Red Delicious</h1><img src=\"http://www.theproducemom.com/wp-content/uploads/2012/01/red_delicious_jpg.jpg\"><p>These bright red apples are the most common found in many supermarkets...</p></article>"
+          html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article><article><h1>Red Delicious</h1><img src=\"http://www.theproducemom.com/wp-content/uploads/2012/01/red_delicious_jpg.jpg\"><p>These bright red apples are the most common found in many supermarkets...</p></article><article><img src=\"https://s3-us-west-2.amazonaws.com/the-grid-img/p/904a32ea9f56b9e7bf1b500e5e2e2217a090b225.jpg\"></article>"
         ]
 
       expected =
@@ -699,6 +699,10 @@ describe 'Flatten', ->
             title: 'Red Delicious'
             caption: 'These bright red apples are the most common found in many supermarkets...'
             src: 'http://www.theproducemom.com/wp-content/uploads/2012/01/red_delicious_jpg.jpg'
+          ,
+            type: 'image'
+            html: "<img src=\"https://s3-us-west-2.amazonaws.com/the-grid-img/p/904a32ea9f56b9e7bf1b500e5e2e2217a090b225.jpg\">"
+            src: 'https://s3-us-west-2.amazonaws.com/the-grid-img/p/904a32ea9f56b9e7bf1b500e5e2e2217a090b225.jpg'
           ]
         ]
 

@@ -259,6 +259,12 @@ module.exports = class Flatten
         caption = null
         title = null
         src = null
+        if tag.children.length is 1 and tag.children[0].name is 'img' and tag.children[0].attribs?.src
+          results.push
+            type: 'image'
+            html: @tagToHtml tag.children[0]
+            src: @normalizeUrl tag.children[0].attribs.src
+          return results
         for child in tag.children
           if child.name is 'h1' and not title
             title = ''
