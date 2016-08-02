@@ -141,7 +141,17 @@ module.exports = class Flatten
         item.content.splice blockIdx, 1
         return callback()
       if blocks.length is 1
-        # Block returned only one block, update values
+        # Block returned only one block
+
+        if blocks[0].type is 'interactive' and block.type in [
+          'location'
+          'video'
+          'audio'
+        ]
+          # The block was manually classified, keep it in type
+          blocks[0].type = block.type
+
+        # Update values
         item.content[blockIdx][k] = v for k, v of blocks[0]
         return callback()
 

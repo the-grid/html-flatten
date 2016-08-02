@@ -126,6 +126,29 @@ describe 'Cleanup', ->
           text: 'A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.'
         done()
 
+  describe 'cleaning up a more specific iframe block', ->
+    it 'should retain the block type', (done) ->
+      item =
+        content: [
+          id: 'location'
+          type: 'location'
+          html: "<iframe src=\"https://the-grid.github.io/ed-location/?latitude=19.327691&longitude=-99.82173&zoom=7&address=M%C3%A9xico%2C%20Mexico\"></iframe>"
+          metadata:
+            geo:
+              latitude: 19.327691
+              longitude: -99.82173
+              zoom: 7
+            isBasedOnUrl: "https://the-grid.github.io/ed-location/?latitude=19.327691&longitude=-99.82173&zoom=7&address=M%C3%A9xico%2C%20Mexico"
+            address: "México, Mexico"
+            starred: true
+        ]
+
+      orig = JSON.parse JSON.stringify item
+      f.flattenItem item, (err, cleaned) ->
+        return done err if err
+        chai.expect(cleaned).to.eql orig
+        done()
+
   describe 'cleaning up a full item', ->
     it 'should produce clean blocks', (done) ->
       fs = require 'fs'
