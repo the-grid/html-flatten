@@ -105,7 +105,7 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
-    it 'should be able to find Embed.ly videos and audios', (done) ->
+    it 'should be able to find Embed.ly media', (done) ->
       if console.timeEnd
         console.time 'flattening HTML structures'
       sent =
@@ -122,6 +122,8 @@ describe 'Flatten', ->
           <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Ffast.wistia.net%2Fembed%2Fiframe%2Fmgdmzrzrm4%3Ftwitter%3Dtrue&src_secure=1&url=http%3A%2F%2Fdave.wistia.com%2Fmedias%2Fmgdmzrzrm4%3FembedType%3Dapi%26videoWidth%3D640&image=https%3A%2F%2Fembed-ssl.wistia.com%2Fdeliveries%2F1700d47fbfd310773b221d52e3a6d8c1cb91050a.jpg%3Fimage_crop_resized%3D640x360&key=internal&type=text%2Fhtml&schema=wistia" width="500" height="281" scrolling="no" frameborder="0" allowfullscreen></iframe>
           <iframe src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fi.imgur.com%2FaK4RY7D.mp4&src_secure=1&url=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gifv&image=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gif%3Fnoredirect&key=b7d04c9b404c499eba89ee7072e1c4f7&type=video%2Fmp4&schema=imgur" width="718" height="404" scrolling="no" frameborder="0" allowfullscreen></iframe>
           <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy" width="435" height="181" scrolling="no" frameborder="0" allowfullscreen></iframe>
+          <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.google.com%2Fmaps%2Fembed%2Fv1%2Fdirections%3Forigin%3DHakaniemi%252C%252B00530%252BHelsinki%252C%252BFinland%26destination%3DMustikkamaa%252C%252BHelsinki%252C%252BFinland%26center%3D60.182744%252C24.9565228%26key%3DAIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q%26zoom%3D14&url=https%3A%2F%2Fwww.google.com%2Fmaps%2Fdir%2FHakaniemi%2C%2B00530%2BHelsinki%2C%2BFinland%2FMustikkamaa%2C%2BHelsinki%2C%2BFinland%2F%4060.182744%2C24.9565228%2C14z%2Fdata%3D%213m1%214b1%214m14%214m13%211m5%211m1%211s0x46920bd487056237%3A0xdf979abdf5d04e9c%212m2%211d24.95006%212d60.17885%211m5%211m1%211s0x469209674cbc15a5%3A0x44e89871aabab498%212m2%211d24.99317%212d60.18217%213e2%3Fdg%3Ddbrw%26newdg%3D1&image=http%3A%2F%2Fmaps-api-ssl.google.com%2Fmaps%2Fapi%2Fstaticmap%3Fcenter%3D60.182744%2C24.9565228%26zoom%3D15%26size%3D250x250%26sensor%3Dfalse&key=internal&type=text%2Fhtml&schema=google" width="500" height="375" scrolling="no" frameborder="0" allowfullscreen></iframe>
+          <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fembed%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&url=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fviewer%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&image=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fthumbnail%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&key=internal&type=text%2Fhtml&schema=google" width="500" height="375" scrolling="no" frameborder="0" allowfullscreen></iframe>
           """
         ]
 
@@ -163,6 +165,12 @@ describe 'Flatten', ->
             type: 'video'
             video: '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy'
             html: "<iframe src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy\" width=\"435\" height=\"181\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>"
+          ,
+            type: 'interactive'
+            html: "<iframe src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.google.com%2Fmaps%2Fembed%2Fv1%2Fdirections%3Forigin%3DHakaniemi%252C%252B00530%252BHelsinki%252C%252BFinland%26destination%3DMustikkamaa%252C%252BHelsinki%252C%252BFinland%26center%3D60.182744%252C24.9565228%26key%3DAIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q%26zoom%3D14&url=https%3A%2F%2Fwww.google.com%2Fmaps%2Fdir%2FHakaniemi%2C%2B00530%2BHelsinki%2C%2BFinland%2FMustikkamaa%2C%2BHelsinki%2C%2BFinland%2F%4060.182744%2C24.9565228%2C14z%2Fdata%3D%213m1%214b1%214m14%214m13%211m5%211m1%211s0x46920bd487056237%3A0xdf979abdf5d04e9c%212m2%211d24.95006%212d60.17885%211m5%211m1%211s0x469209674cbc15a5%3A0x44e89871aabab498%212m2%211d24.99317%212d60.18217%213e2%3Fdg%3Ddbrw%26newdg%3D1&image=http%3A%2F%2Fmaps-api-ssl.google.com%2Fmaps%2Fapi%2Fstaticmap%3Fcenter%3D60.182744%2C24.9565228%26zoom%3D15%26size%3D250x250%26sensor%3Dfalse&key=internal&type=text%2Fhtml&schema=google\" width=\"500\" height=\"375\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>"
+          ,
+            type: 'interactive'
+            html: "<iframe src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fembed%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&url=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fviewer%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&image=https%3A%2F%2Fwww.google.com%2Fmaps%2Fd%2Fthumbnail%3Fmid%3D11XCQ_V3rQaDTdIGVtvPd4aXUOmk%26hl%3Den_US&key=internal&type=text%2Fhtml&schema=google\" width=\"500\" height=\"375\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>"
           ]
         ]
 

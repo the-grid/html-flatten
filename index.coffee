@@ -414,6 +414,10 @@ module.exports = class Flatten
     return 'video' if parsed.hostname.indexOf('giphy.com') isnt -1
     return 'audio' if parsed.hostname.indexOf('soundcloud.com') isnt -1
     return 'audio' if parsed.hostname.indexOf('bandcamp.com') isnt -1
+    return 'interactive' if parsed.hostname.indexOf('maps.google.') isnt -1 and parsed.pathname.indexOf('/directions') isnt -1
+    return 'interactive' if parsed.hostname.indexOf('www.google.com') isnt -1 and parsed.pathname.indexOf('/directions') isnt -1
+    return 'interactive' if parsed.hostname.indexOf('maps.google.') isnt -1 and parsed.query?.mid?
+    return 'interactive' if parsed.hostname.indexOf('www.google.com') isnt -1 and parsed.query?.mid?
     return 'location' if parsed.hostname.indexOf('maps.google.') isnt -1
     return 'location' if parsed.hostname.indexOf('www.google.com') isnt -1 and parsed.pathname.indexOf('/maps') isnt -1
 
