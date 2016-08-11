@@ -121,6 +121,7 @@ describe 'Flatten', ->
           <iframe src=\"https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.google.com%2Fmaps%2Fembed%2Fv1%2Fview%3Fmaptype%3Dsatellite%26center%3D35.0349449%252C-83.9676685%26key%3DAIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q%26zoom%3D15&url=https%3A%2F%2Fwww.google.com%2Fmaps%2F%4035.0349449%2C-83.9676685%2C585m%2Fdata%3D%213m1%211e3%3Fdg%3Ddbrw%26newdg%3D1&image=http%3A%2F%2Fmaps-api-ssl.google.com%2Fmaps%2Fapi%2Fstaticmap%3Fcenter%3D35.0349449%2C-83.9676685%26zoom%3D15%26size%3D250x250%26sensor%3Dfalse&key=b7d04c9b404c499eba89ee7072e1c4f7&type=text%2Fhtml&schema=google\" width=\"600\" height=\"450\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>
           <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Ffast.wistia.net%2Fembed%2Fiframe%2Fmgdmzrzrm4%3Ftwitter%3Dtrue&src_secure=1&url=http%3A%2F%2Fdave.wistia.com%2Fmedias%2Fmgdmzrzrm4%3FembedType%3Dapi%26videoWidth%3D640&image=https%3A%2F%2Fembed-ssl.wistia.com%2Fdeliveries%2F1700d47fbfd310773b221d52e3a6d8c1cb91050a.jpg%3Fimage_crop_resized%3D640x360&key=internal&type=text%2Fhtml&schema=wistia" width="500" height="281" scrolling="no" frameborder="0" allowfullscreen></iframe>
           <iframe src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fi.imgur.com%2FaK4RY7D.mp4&src_secure=1&url=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gifv&image=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gif%3Fnoredirect&key=b7d04c9b404c499eba89ee7072e1c4f7&type=video%2Fmp4&schema=imgur" width="718" height="404" scrolling="no" frameborder="0" allowfullscreen></iframe>
+          <iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy" width="435" height="181" scrolling="no" frameborder="0" allowfullscreen></iframe>
           """
         ]
 
@@ -158,6 +159,10 @@ describe 'Flatten', ->
             type: 'video'
             video: '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fi.imgur.com%2FaK4RY7D.mp4&src_secure=1&url=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gifv&image=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gif%3Fnoredirect&key=b7d04c9b404c499eba89ee7072e1c4f7&type=video%2Fmp4&schema=imgur'
             html: '<iframe src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fi.imgur.com%2FaK4RY7D.mp4&src_secure=1&url=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gifv&image=http%3A%2F%2Fi.imgur.com%2FaK4RY7D.gif%3Fnoredirect&key=b7d04c9b404c499eba89ee7072e1c4f7&type=video%2Fmp4&schema=imgur" width="718" height="404" scrolling="no" frameborder="0" allowfullscreen></iframe>'
+          ,
+            type: 'video'
+            video: '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy'
+            html: "<iframe src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fgiphy.com%2Fembed%2FsRm0Q3hirbSX6%2Ftwitter%2Fiframe&src_secure=1&url=http%3A%2F%2Fgiphy.com%2Fgifs%2FsRm0Q3hirbSX6&image=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FsRm0Q3hirbSX6%2Fgiphy.gif&key=internal&type=text%2Fhtml&schema=giphy\" width=\"435\" height=\"181\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>"
           ]
         ]
 
