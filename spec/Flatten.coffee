@@ -559,6 +559,30 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+    it 'should not strip \\n from pre', (done) ->
+
+      sent =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          html: "<pre><code>one\ntwo</code></pre>"
+        ]
+
+      expected =
+        path: 'foo/bar.html'
+        items: [
+          id: 'main'
+          content: [
+              type: 'code'
+              html: "<pre><code>one\ntwo</code></pre>"
+          ]
+        ]
+
+      f.processPage sent, (err, data) ->
+        return done err if err
+        chai.expect(data).to.deep.eql expected
+        done()
+
     it 'should be able to detect iframe videos', (done) ->
       sent =
         path: 'foo/bar.html'
