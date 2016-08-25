@@ -334,7 +334,6 @@ module.exports = class Flatten
           text: @tagToText tag
         results.push normalized
       when 'pre'
-        console.log tag, tag.children[0].children[0]
         results.push
           type: 'code'
           html: @tagToHtml tag, id
