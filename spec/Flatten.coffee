@@ -562,20 +562,18 @@ describe 'Flatten', ->
     it 'should not strip \\n from pre', (done) ->
 
       sent =
-        path: 'foo/bar.html'
         items: [
           id: 'main'
           html: "<pre><code>one\ntwo</code></pre>"
         ]
 
       expected =
-        path: 'foo/bar.html'
         items: [
           id: 'main'
-          content: [
-              type: 'code'
-              html: "<pre><code>one\ntwo</code></pre>"
-          ]
+          content: [{
+            type: 'code'
+            html: "<pre><code>one\ntwo</code></pre>"
+          }]
         ]
 
       f.processPage sent, (err, data) ->

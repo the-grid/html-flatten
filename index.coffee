@@ -107,8 +107,6 @@ module.exports = class Flatten
           item.content.push block
       delete item.html
       callback null, item
-    ,
-      ignoreWhitespace: true
     parser = new htmlparser.Parser handler
     parser.parseComplete item.html
 
@@ -168,8 +166,6 @@ module.exports = class Flatten
       for b, i in blocks
         item.content.splice blockIdx + 1 + i, 0, b
       do callback
-    ,
-      ignoreWhitespace: true
     parser = new htmlparser.Parser handler
     parser.parseComplete block.html
 
@@ -338,6 +334,7 @@ module.exports = class Flatten
           text: @tagToText tag
         results.push normalized
       when 'pre'
+        console.log tag, tag.children[0].children[0]
         results.push
           type: 'code'
           html: @tagToHtml tag, id
