@@ -819,7 +819,7 @@ describe 'Flatten', ->
           content: [
             type: 'cta'
             html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
-            link: "https://link.com/"
+            url: "https://link.com/"
             label: 'Call to action!'
           ]
         ]
