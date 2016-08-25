@@ -805,7 +805,29 @@ describe 'Flatten', ->
         chai.expect(data).to.deep.eql expected
         done()
 
+  describe 'flattening a link with cta role', ->
+    it 'should produce a cta block', (done) ->
+      sent =
+        items: [
+          id: 'cta-link'
+          html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
+        ]
 
+      expected =
+        items: [
+          id: 'cta-link'
+          content: [
+            type: 'cta'
+            html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
+            link: "https://link.com/"
+            label: 'Call to action!'
+          ]
+        ]
+
+      f.processPage sent, (err, data) ->
+        return done err if err
+        chai.expect(data).to.deep.eql expected
+        done()
 
 
   describe 'flattening a full XHTML file', ->

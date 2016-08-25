@@ -364,6 +364,10 @@ module.exports = class Flatten
         return results unless normalizedChildren.length
         if tag.attribs?.href
           normalizedChildren[0].html = @tagToHtml tag, id
+        if tag.attribs?['data-role'] is 'cta'
+          normalizedChildren[0].type = 'cta'
+          normalizedChildren[0].link = tag.attribs.href
+          normalizedChildren[0].label = @tagToText(tag)
         return normalizedChildren
       when 'button'
         return results unless tag.attribs?['data-role']
