@@ -810,7 +810,9 @@ describe 'Flatten', ->
       sent =
         items: [
           id: 'cta-link'
-          html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
+          html:
+            '<a href="https://link.com/" data-role="cta">Call to action!</a>' +
+            '<button data-role="cta" data-price="777" data-item="item-uuid">buy now</button>'
         ]
 
       expected =
@@ -821,6 +823,11 @@ describe 'Flatten', ->
             html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
             url: "https://link.com/"
             label: 'Call to action!'
+          ,
+            type: 'cta'
+            html: '<button data-role="cta" data-price="777" data-item="item-uuid">buy now</button>'
+            price: '777'
+            item: 'item-uuid'
           ]
         ]
 
