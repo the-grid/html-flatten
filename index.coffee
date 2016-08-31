@@ -364,16 +364,21 @@ module.exports = class Flatten
         return results unless normalizedChildren.length
         if tag.attribs?.href
           normalizedChildren[0].html = @tagToHtml tag, id
+        if tag.attribs?['data-role'] is 'cta'
+          normAttributes = @normalizeCtaAttributes(tag.attribs)
+          for key, val of normAttributes
+            normalizedChildren[0][key] = val
+          normalizedChildren[0].url = tag.attribs.href
+          normalizedChildren[0].label = @tagToText(tag)
         return normalizedChildren
       when 'button'
         return results unless tag.attribs?['data-role']
         normalized = {}
-        for key, val of tag.attribs
-          continue unless key.indexOf('data-') is 0
-          attrib = key.substr 5
-          attrib = 'type' if attrib is 'role'
-          normalized[attrib] = val
+        normAttributes = @normalizeCtaAttributes(tag.attribs)
+        for key, val of normAttributes
+          normalized[key] = val
         normalized.html = @tagToHtml tag, id
+        normalized.label = @tagToText(tag)
         results.push normalized
         return results
       # Tags that we ignore entirely
@@ -384,6 +389,16 @@ module.exports = class Flatten
           type: 'unknown'
           html: @tagToHtml tag, id
     results
+
+  normalizeCtaAttributes: (attributes) ->
+    normalized = {}
+    for key, val of attributes
+      continue unless key.indexOf('data-') is 0
+      attrib = key.substr 5
+      attrib = 'verb' if attrib is 'type'
+      attrib = 'type' if attrib is 'role'
+      normalized[attrib] = val
+    normalized
 
   isAttributeAllowed: (attribute) ->
     if attribute.substr(0, 5) is 'data-'
