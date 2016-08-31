@@ -812,7 +812,8 @@ describe 'Flatten', ->
           id: 'cta-link'
           html:
             '<a href="https://link.com/" data-role="cta">Call to action!</a>' +
-            '<button data-role="cta" data-price="777" data-item="item-uuid">buy now</button>'
+            '<a href="https://paypal.com/button" data-role="cta" data-cta="cta-uuid" data-type="verrb" data-price="555">buy it?</a>' +
+            '<button data-role="cta" data-cta="cta-uuid" data-type="purchase" data-price="777" data-item="item-uuid">buy now</button>'
         ]
 
       expected =
@@ -825,9 +826,19 @@ describe 'Flatten', ->
             label: 'Call to action!'
           ,
             type: 'cta'
-            html: '<button data-role="cta" data-price="777" data-item="item-uuid">buy now</button>'
+            html: '<a href="https://paypal.com/button" data-role="cta" data-cta="cta-uuid" data-type="verrb" data-price="555">buy it?</a>'
+            url: "https://paypal.com/button"
+            label: 'buy it?'
+            cta: 'cta-uuid'
+            verb: 'verrb'
+            price: '555'
+          ,
+            type: 'cta'
+            html: '<button data-role="cta" data-cta="cta-uuid" data-type="purchase" data-price="777" data-item="item-uuid">buy now</button>'
             price: '777'
             item: 'item-uuid'
+            cta: 'cta-uuid'
+            verb: 'purchase'
           ]
         ]
 
