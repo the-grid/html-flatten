@@ -51,6 +51,7 @@ describe 'Flatten', ->
           verb: 'purchase'
           price: '96'
           html: '<button data-uuid="71bfc2e0-4a96-11e4-916c-0800200c9a66" data-role="cta" data-verb="purchase" data-price="96">Buy now</button>'
+          label: 'Buy now'
         ]
 
       f.flattenItem sent, (err, data) ->
@@ -839,6 +840,7 @@ describe 'Flatten', ->
             item: 'item-uuid'
             cta: 'cta-uuid'
             verb: 'purchase'
+            label: 'buy now'
           ]
         ]
 

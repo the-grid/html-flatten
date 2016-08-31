@@ -378,6 +378,7 @@ module.exports = class Flatten
         for key, val of normAttributes
           normalized[key] = val
         normalized.html = @tagToHtml tag, id
+        normalized.label = @tagToText(tag)
         results.push normalized
         return results
       # Tags that we ignore entirely
