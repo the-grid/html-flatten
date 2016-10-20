@@ -21,6 +21,10 @@ describe 'Cleanup', ->
           html: '<p>This is some text</p>'
           metadata:
             title: 'Bar'
+        ,
+          id: 'baz'
+          type: 'hr'
+          html: '<hr>'
         ]
       expected = JSON.parse JSON.stringify item
       expected.content[0].text = 'Hello world!'

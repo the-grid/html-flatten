@@ -39,6 +39,7 @@ module.exports = class Flatten
     'div'
     'blockquote'
     'pre'
+    'hr'
   ]
   ignoredAttribs: [
     'data-query-source'
@@ -381,8 +382,12 @@ module.exports = class Flatten
         normalized.label = @tagToText(tag)
         results.push normalized
         return results
+      when 'hr'
+        results.push
+          type: 'hr'
+          html: '<hr>'
       # Tags that we ignore entirely
-      when 'form', 'input', 'textarea', 'aside', 'meta', 'script', 'hr', 'br'
+      when 'form', 'input', 'textarea', 'aside', 'meta', 'script', 'br'
         return results
       else
         results.push
