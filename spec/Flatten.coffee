@@ -18,6 +18,7 @@ describe 'Flatten', ->
           <source type="video/mp4" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4"/>
           <source type="video/webm" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm"/>
         </video>
+        <hr>
         <p class='pagination-centered'><img class='img-polaroid' src='http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png' /><img /></p>
         <img alt="Some pretty impressive climbing right there -&gt;&quot;&commat;Arcteryx&colon; &commat;Gilwad climbing Helmcken Falls http&colon;&sol;&sol;ow&period;ly&sol;JwnFL" src="https://pbs.twimg.com/media/B-iy-ETCYAAGEcU.jpg:large">
         <p><button data-uuid="71bfc2e0-4a96-11e4-916c-0800200c9a66" data-role="cta" data-verb="purchase" data-price="96">Buy now</button></p>
@@ -36,6 +37,9 @@ describe 'Flatten', ->
         ,
           type: 'video'
           html: '<video autoplay="true" loop="true" controls="false"><source type="video/mp4" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4"><source type="video/webm" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm"></video>'
+        ,
+          type: 'hr'
+          html: '<hr>'
         ,
           type: 'image'
           src: 'http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png'
