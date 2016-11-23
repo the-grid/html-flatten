@@ -70,8 +70,6 @@ describe 'Flatten', ->
 
   describe 'flattening HTML structures', ->
     it 'should be able to find a video and an image inside figures', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -113,15 +111,11 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
 
     it 'should be able to find Embed.ly videos and audios', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -185,15 +179,11 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
 
     it 'should be able to find images inside paragraphs', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -228,15 +218,11 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
 
     it 'should be able to normalize video and image URLs', (done) ->
-      if console.timeEnd
-        console.time 'URL normalization'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -276,8 +262,6 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'URL normalization'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -381,12 +365,7 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening headlines and paragraphs'
-
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening headlines and paragraphs'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -455,12 +434,7 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening lists'
-
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening lists'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -500,11 +474,7 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening lists'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening lists'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -536,11 +506,7 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening formatting'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening formatting'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -680,11 +646,7 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening iframes'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening iframes'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -750,8 +712,6 @@ describe 'Flatten', ->
 
   describe 'flattening Twitter-style HTML structures', ->
     it 'should be able to find a video and a paragraph', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -779,8 +739,6 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data.items[0].content[0].text).to.equal expected.items[0].content[0].text
         chai.expect(data).to.deep.eql expected
@@ -788,8 +746,6 @@ describe 'Flatten', ->
 
   describe 'flattening content with Article elements', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -828,16 +784,12 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
 
   describe 'flattening content with query-stringed image URL', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
         site: 'the-domains/example.net'
@@ -872,16 +824,12 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
 
   describe 'flattening content from Medium hosted image', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'medium.html'
         site: 'the-domains/example.net'
@@ -905,8 +853,6 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
         schema.validate data, 'page', done
@@ -965,8 +911,6 @@ describe 'Flatten', ->
     it 'should produce flattened contents', (done) ->
       fs = require 'fs'
       path = require 'path'
-      if console.timeEnd
-        console.time 'flattening XHTML structures'
       # sourcePath = path.resolve __dirname, './fixtures/tika.xhtml'
       # console.log sourcePath
       # html = fs.readFileSync sourcePath, 'utf-8'
@@ -989,6 +933,4 @@ describe 'Flatten', ->
         ]
         texts = data.content.filter (block) -> block.type is 'text'
         chai.expect(texts.length).to.equal 4
-        if console.timeEnd
-          console.timeEnd 'flattening XHTML structures'
         schema.validate data, 'item', done
