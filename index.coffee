@@ -112,6 +112,7 @@ module.exports = class Flatten
     parser.parseComplete item.html
 
   cleanUpItem: (item, callback) ->
+    delete item.starred
     cleanUp = Promise.promisify @cleanUpBlock.bind @
     Promise.map item.content, (block) ->
       cleanUp block, item
