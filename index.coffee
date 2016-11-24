@@ -89,6 +89,7 @@ module.exports = class Flatten
     .nodeify (err) ->
       return callback err if err
       callback null, page
+    return
 
   flattenItem: (item, callback) ->
     if item.content and not item.html
@@ -119,6 +120,7 @@ module.exports = class Flatten
     .nodeify (err) ->
       return callback err if err
       callback null, item
+    return
 
   cleanUpBlock: (block, item, callback) ->
     return callback null unless block
