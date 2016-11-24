@@ -102,7 +102,7 @@ module.exports = class Flatten
     handler = new htmlparser.DefaultHandler (err, dom) =>
       item.content = []
       for tag in dom
-        normalized = @normalizeTag tag, item.id
+        normalized = @normalizeTag tag, item.metadata?.isBasedOnUrl or item.id
         continue unless normalized
         for block in normalized
           item.content.push block
@@ -112,6 +112,7 @@ module.exports = class Flatten
     parser.parseComplete item.html
 
   cleanUpItem: (item, callback) ->
+    delete item.starred
     cleanUp = Promise.promisify @cleanUpBlock.bind @
     Promise.map item.content, (block) ->
       cleanUp block, item
@@ -128,7 +129,7 @@ module.exports = class Flatten
     handler = new htmlparser.DefaultHandler (err, dom) =>
       blocks = []
       for tag in dom
-        normalized = @normalizeTag tag, item.id
+        normalized = @normalizeTag tag, item.metadata?.isBasedOnUrl or item.id
         continue unless normalized
         for b in normalized
           blocks.push b

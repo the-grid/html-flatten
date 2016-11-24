@@ -1,15 +1,20 @@
 Flatten = require '../build/flatten-html'
 chai = require 'chai'
+schema = require './utils/schema'
 
 describe 'Flatten', ->
   f = null
+  before ->
+    do schema.before
   beforeEach ->
     f = new Flatten()
+  after ->
+    do schema.after
 
   describe 'flattening HTML structures inside item', ->
     it 'should be able to find a video and a paragraph', (done) ->
       sent =
-        id: 'main'
+        id: 'ddc572c9-7343-4dbd-a2f9-b0e347353612'
         html: """
         <script>alert('foo');</script>
         <p>Hello world, <b>this</b> is <span>some</span> text</p>
@@ -25,7 +30,7 @@ describe 'Flatten', ->
         """
 
       expected =
-        id: 'main'
+        id: 'ddc572c9-7343-4dbd-a2f9-b0e347353612'
         content: [
           type: 'text'
           html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -61,16 +66,16 @@ describe 'Flatten', ->
       f.flattenItem sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'item', done
 
   describe 'flattening HTML structures', ->
     it 'should be able to find a video and an image inside figures', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <p>Hello world, <b>this</b> is some text</p>
           <figure><iframe frameborder="0" src="http://www.youtube.com/embed/YzC7MfCtkzo"></iframe></figure>
@@ -81,8 +86,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -104,19 +111,17 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to find Embed.ly videos and audios', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <p>Hello world, <b>this</b> is some text</p>
           <iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2F8Dos61_6sss%3Ffeature%3Doembed&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D8Dos61_6sss&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2F8Dos61_6sss%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube\" width=\"500\" height=\"281\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>
@@ -132,8 +137,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -172,19 +179,17 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to find images inside paragraphs', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <p>Hello world, <b>this</b> is some text</p>
           <p>Another exciting new product is <a href="http://noflojs.org/">NoFlo,</a> a flow-based Javascript programming tool. Developed as the result of a successful Kickstarter campaign (disclosure: I was a backer), it highlights both the dissatisfaction with the currently available tools, and the untapped potential for flow-based programming tools, that could be more easily understood by non-programmers. NoFlo builds upon Node.js to deliver functional apps to the browser. Native output to Android and iOS is in the works.<a href="http://noflojs.org/"><img src="http://netdna.webdesignerdepot.com/uploads/2014/07/0091.jpg" alt=""></a></p>
@@ -193,8 +198,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -211,19 +218,19 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to normalize video and image URLs', (done) ->
-      if console.timeEnd
-        console.time 'URL normalization'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://bergie.iki.fi/blog/ingress-table/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://bergie.iki.fi/'
           html: """
           <p>Hello world, <b>this</b> is some text</p>
           <video src="/files/foo.mp4"></video>
@@ -233,8 +240,12 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://bergie.iki.fi/blog/ingress-table/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://bergie.iki.fi/'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -251,18 +262,17 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'URL normalization'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
-
+        schema.validate data, 'page', done
 
     it 'should be able to flatten a paragraph with only an image to an image', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <p><a href="http://foo.bar"><img src="http://foo.bar" alt="An image" title="My cool photo" data-foo="bar"></a></p>
           """
@@ -270,8 +280,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'image'
             src: 'http://foo.bar/'
@@ -284,13 +296,15 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should decode entities in attributes', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <img src="http://foo.bar/j.jpg" alt="An image &amp; &lt;stuff&gt;" title="&yuml;o" data-foo="bar">
           """
@@ -298,8 +312,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             src: 'http://foo.bar/j.jpg'
             type: 'image'
@@ -312,13 +328,15 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to flatten headlines and paragraphs', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <h1>Hello World</h1>
           <p class="intro">Some text</p>
@@ -328,8 +346,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'h1'
             html: '<h1>Hello World</h1>'
@@ -345,21 +365,18 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening headlines and paragraphs'
-
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening headlines and paragraphs'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to flatten lists', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <ul>
             <li>Hello world<ul>
@@ -371,8 +388,10 @@ describe 'Flatten', ->
         ]
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'list'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
@@ -382,14 +401,15 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
-
+        schema.validate data, 'page', done
 
     it 'should be able to flatten things wrapped in divs', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <div>
           <ul>
@@ -404,29 +424,28 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'list'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening lists'
-
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening lists'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to flatten things wrapped multiple levels of structural tags', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <div>
           <section>
@@ -445,28 +464,28 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'list'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening lists'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening lists'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to discard useless content', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <p><span style=\"font-size: x-large;\"><br></br></span></p>
           <p>&nbsp;</p>
@@ -476,8 +495,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Afterwards, we\'ll be running a dojo. No prior experience with FP is needed for this part; we\'ll all be coming from different levels. Our goals here are to equip you with a more of an understanding of functional programming and it\'s real-world applications and to learn from each other. More than all that: to have some fun with FP!</p>'
@@ -485,20 +506,18 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening formatting'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening formatting'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should keep p nested in blockquote', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <blockquote><p data-grid-id="0123">block quote</p></blockquote>
           """
@@ -506,8 +525,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'quote'
             html: """
@@ -520,14 +541,16 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should not strip br from p', (done) ->
 
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <blockquote><p>one<br>two</p></blockquote>
           <p>three<br />four</p>
@@ -539,8 +562,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
               type: 'quote'
               html: "<blockquote><p>one<br>two</p></blockquote>"
@@ -562,19 +587,25 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should not strip \\n from pre', (done) ->
 
       sent =
+        path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: "<pre><code>one\ntwo</code></pre>"
         ]
 
       expected =
+        path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [{
             type: 'code'
             html: "<pre><code>one\ntwo</code></pre>"
@@ -584,13 +615,15 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
     it 'should be able to detect iframe videos', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: """
           <iframe src="//player.vimeo.com/video/72238422?color=ffffff" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           <iframe src="//foo.bar.com/foo"></iframe>
@@ -599,8 +632,10 @@ describe 'Flatten', ->
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'video'
             video: '//player.vimeo.com/video/72238422?color=ffffff'
@@ -611,21 +646,19 @@ describe 'Flatten', ->
           ]
         ]
 
-      if console.timeEnd
-        console.time 'flattening iframes'
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening iframes'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening a partially pre-flattened page', ->
     it 'should keep the already flattened parts as they were', (done) ->
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -639,15 +672,17 @@ describe 'Flatten', ->
             html: '<img src="http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png">'
           ]
         ,
-          id: 'new'
+          id: 'ae453322-62b5-40b2-bbe9-b3e7e240d24f'
           html: """
           <p>Hello there</p>
           """
         ]
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'main'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'text'
             html: '<p>Hello world, <b>this</b> is some text</p>'
@@ -662,7 +697,7 @@ describe 'Flatten', ->
             html: '<img src="http://blog.interfacevision.com/assets/img/posts/example_visual_language_minecraft_01.png">'
           ]
         ,
-          id: 'new'
+          id: 'ae453322-62b5-40b2-bbe9-b3e7e240d24f'
           content: [
             type: 'text'
             html: '<p>Hello there</p>'
@@ -673,23 +708,29 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         chai.expect(data).to.deep.eql expected
         return done err if err
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening Twitter-style HTML structures', ->
     it 'should be able to find a video and a paragraph', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'https://twitter.com/RonConway/status/472107533788672000'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'https://twitter.com/RonConway/status/472107533788672000'
           html: "Help <a href=\"/BUILDNational\" class=\"twitter-atreply pretty-link\" dir=\"ltr\"><s>@</s><b>BUILDnational</b></a> win $500,000 in the <a href=\"/hashtag/GoogleImpactChallenge?src=hash\" data-query-source=\"hashtag_click\" class=\"twitter-hashtag pretty-link js-nav\" dir=\"ltr\"><s>#</s><b>GoogleImpactChallenge</b></a>! VOTE here: <a href=\"http://t.co/7AzWeaex0D\" rel=\"nofollow\" dir=\"ltr\" data-expanded-url=\"http://bit.ly/1h0KqKN\" class=\"twitter-timeline-link\" target=\"_blank\" title=\"http://bit.ly/1h0KqKN\"><span class=\"tco-ellipsis\"></span><span class=\"invisible\">http://</span><span class=\"js-display-url\">bit.ly/1h0KqKN</span><span class=\"invisible\"></span><span class=\"tco-ellipsis\"><span class=\"invisible\">&nbsp;</span></span></a> <a href=\"/hashtag/BUILDgreaterimpact?src=hash\" data-query-source=\"hashtag_click\" class=\"twitter-hashtag pretty-link js-nav\" dir=\"ltr\"><s>#</s><b>BUILDgreaterimpact</b></a> <a href=\"/hashtag/togetherweBUILD?src=hash\" data-query-source=\"hashtag_click\" class=\"twitter-hashtag pretty-link js-nav\" dir=\"ltr\"><s>#</s><b>togetherweBUILD</b></a>"
         ]
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'https://twitter.com/RonConway/status/472107533788672000'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'https://twitter.com/RonConway/status/472107533788672000'
           content: [
             type: 'text'
             html: "<p>Help <a href=\"https://twitter.com/BUILDNational\">@<b>BUILDnational</b></a> win $500,000 in the <a href=\"https://twitter.com/hashtag/GoogleImpactChallenge?src=hash\">#<b>GoogleImpactChallenge</b></a>! VOTE here: <a href=\"http://t.co/7AzWeaex0D\" title=\"http://bit.ly/1h0KqKN\">http://bit.ly/1h0KqKN</a><a href=\"https://twitter.com/hashtag/BUILDgreaterimpact?src=hash\">#<b>BUILDgreaterimpact</b></a><a href=\"https://twitter.com/hashtag/togetherweBUILD?src=hash\">#<b>togetherweBUILD</b></a></p>"
@@ -698,28 +739,32 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data.items[0].content[0].text).to.equal expected.items[0].content[0].text
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening content with Article elements', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://html5doctor.com/the-article-element/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://html5doctor.com/the-article-element/'
           html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article><article><h1>Red Delicious</h1><img src=\"http://www.theproducemom.com/wp-content/uploads/2012/01/red_delicious_jpg.jpg\"><p>These bright red apples are the most common found in many supermarkets...</p></article><article><img src=\"https://s3-us-west-2.amazonaws.com/the-grid-img/p/904a32ea9f56b9e7bf1b500e5e2e2217a090b225.jpg\"></article>"
         ]
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://html5doctor.com/the-article-element/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://html5doctor.com/the-article-element/'
           content: [
             type: 'article'
             html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article>"
@@ -739,27 +784,31 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening content with query-stringed image URL', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://html5doctor.com/the-article-element/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://html5doctor.com/the-article-element/'
           html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article><article><h1>Red Delicious</h1><img src=\"https://imgflo.herokuapp.com/graph/vahj1ThiexotieMo/5764f83177c27abe632d7dce03e55e6d/noop.jpeg?input=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F1200%2F1*f7gpfegwe5jhpYs_1R_neA.jpeg\"><p>These bright red apples are the most common found in many supermarkets...</p></article>"
         ]
 
       expected =
         path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'http://html5doctor.com/the-article-element/'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
+          metadata:
+            isBasedOnUrl: 'http://html5doctor.com/the-article-element/'
           content: [
             type: 'article'
             html: "<article><h1>Apple</h1><p>The <b>apple</b> is the pomaceous fruit of the apple tree...</p></article>"
@@ -775,27 +824,27 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening content from Medium hosted image', ->
     it 'should produce an article block', (done) ->
-      if console.timeEnd
-        console.time 'flattening HTML structures'
       sent =
         path: 'medium.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'fake-medium'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html: "<figure><img src='https://cdn-images-1.medium.com/max/1200/1*f7gpfegwe5jhpYs_1R_neA.jpeg'></figure>"
         ]
 
       expected =
         path: 'medium.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'fake-medium'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'image'
             src: 'https://cdn-images-1.medium.com/max/1200/1*f7gpfegwe5jhpYs_1R_neA.jpeg'
@@ -804,26 +853,30 @@ describe 'Flatten', ->
         ]
 
       f.processPage sent, (err, data) ->
-        if console.timeEnd
-          console.timeEnd 'flattening HTML structures'
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
+        schema.validate data, 'page', done
 
   describe 'flattening a link with cta role', ->
     it 'should produce a cta block', (done) ->
       sent =
+        path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'cta-link'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           html:
             '<a href="https://link.com/" data-role="cta">Call to action!</a>' +
-            '<a href="https://paypal.com/button" data-role="cta" data-cta="cta-uuid" data-type="verrb" data-price="555">buy it?</a>' +
-            '<button data-role="cta" data-cta="cta-uuid" data-type="purchase" data-price="777" data-item="item-uuid">buy now</button>'
+            '<a href="https://paypal.com/button" data-role="cta" data-cta="7edd2510-363d-4c24-8dad-aa648ffc628f" data-type="verrb" data-price="555">buy it?</a>' +
+            '<button data-role="cta" data-cta="700c7d7e-737f-4b05-bc8c-cb42700bc0fb" data-type="purchase" data-price="777" data-item="04699d63-c919-4410-9a54-9803dc8e2c25">buy now</button>'
         ]
 
       expected =
+        path: 'foo/bar.html'
+        site: 'the-domains/example.net'
+        config: {}
         items: [
-          id: 'cta-link'
+          id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
             type: 'cta'
             html: '<a href="https://link.com/" data-role="cta">Call to action!</a>'
@@ -831,18 +884,18 @@ describe 'Flatten', ->
             label: 'Call to action!'
           ,
             type: 'cta'
-            html: '<a href="https://paypal.com/button" data-role="cta" data-cta="cta-uuid" data-type="verrb" data-price="555">buy it?</a>'
+            html: '<a href="https://paypal.com/button" data-role="cta" data-cta="7edd2510-363d-4c24-8dad-aa648ffc628f" data-type="verrb" data-price="555">buy it?</a>'
             url: "https://paypal.com/button"
             label: 'buy it?'
-            cta: 'cta-uuid'
+            cta: '7edd2510-363d-4c24-8dad-aa648ffc628f'
             verb: 'verrb'
             price: '555'
           ,
             type: 'cta'
-            html: '<button data-role="cta" data-cta="cta-uuid" data-type="purchase" data-price="777" data-item="item-uuid">buy now</button>'
+            html: '<button data-role="cta" data-cta="700c7d7e-737f-4b05-bc8c-cb42700bc0fb" data-type="purchase" data-price="777" data-item="04699d63-c919-4410-9a54-9803dc8e2c25">buy now</button>'
             price: '777'
-            item: 'item-uuid'
-            cta: 'cta-uuid'
+            item: '04699d63-c919-4410-9a54-9803dc8e2c25'
+            cta: '700c7d7e-737f-4b05-bc8c-cb42700bc0fb'
             verb: 'purchase'
             label: 'buy now'
           ]
@@ -851,25 +904,21 @@ describe 'Flatten', ->
       f.processPage sent, (err, data) ->
         return done err if err
         chai.expect(data).to.deep.eql expected
-        done()
-
+        schema.validate data, 'page', done
 
   describe 'flattening a full XHTML file', ->
     # return if window?
     it 'should produce flattened contents', (done) ->
       fs = require 'fs'
       path = require 'path'
-      if console.timeEnd
-        console.time 'flattening XHTML structures'
       # sourcePath = path.resolve __dirname, './fixtures/tika.xhtml'
       # console.log sourcePath
       # html = fs.readFileSync sourcePath, 'utf-8'
       html = fs.readFileSync __dirname+'/fixtures/tika.xhtml', 'utf-8'
       sent =
-        path: 'foo/bar.html'
         html: html
 
-      f.processPage sent, (err, data) ->
+      f.flattenItem sent, (err, data) ->
         return done err if err
         images = data.content.filter (block) -> block.type is 'image'
         chai.expect(images.length).to.equal 6
@@ -884,6 +933,4 @@ describe 'Flatten', ->
         ]
         texts = data.content.filter (block) -> block.type is 'text'
         chai.expect(texts.length).to.equal 4
-        if console.timeEnd
-          console.timeEnd 'flattening XHTML structures'
-        done()
+        schema.validate data, 'item', done
