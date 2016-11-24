@@ -46,7 +46,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-mocha-test": "^0.13.2",
-    "mocha": "2.5.3",
+    "mocha": "3.1.2",
     "thegrid-apidocs": "^0.1.19",
     "tv4": "^1.2.7"
   }
