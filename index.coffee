@@ -212,12 +212,19 @@ module.exports = class Flatten
           type: 'video'
           html: @tagToHtml tag, id
         if not tag.attribs.src
-          sources = []
+          sources = {}
           for child in tag.children
             if child.name is "source" and child.attribs?.src?
               normalized = @normalizeUrl child.attribs.src, id
-              sources.push normalized
-          video.video = sources if sources.length
+              console.log child.attribs
+              if child.attribs.type?
+                sources["#{child.attribs.type}"] = normalized
+          if sources["video/ogv"]
+            video.video = sources["video/ogv"]
+          else if sources["video/mp4"]
+            video.video = sources["video/mp4"]
+          else
+            video.video = sources[Object.keys(sources)[0]] if (Object.keys(a)).length
         else
           video.video = tag.attribs.src
         video.src = tag.attribs.poster if tag.attribs.poster
