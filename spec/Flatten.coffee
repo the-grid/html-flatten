@@ -41,6 +41,7 @@ describe 'Flatten', ->
           html: '<video src="http://foo.bar/"></video>'
         ,
           type: 'video'
+          video: '//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4'
           html: '<video autoplay="true" loop="true" controls="false"><source type="video/mp4" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4"><source type="video/webm" src="//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm"></video>'
         ,
           type: 'hr'

@@ -211,8 +211,22 @@ module.exports = class Flatten
         video =
           type: 'video'
           html: @tagToHtml tag, id
-        video.video = tag.attribs.src if tag.attribs.src
         video.src = tag.attribs.poster if tag.attribs.poster
+        if tag.attribs.src
+          video.video = tag.attribs.src
+        else
+          sources = {}
+          for child in tag.children
+            if child.name is "source" and child.attribs?.src?
+              normalized = @normalizeUrl child.attribs.src, id
+              if child.attribs.type?
+                sources["#{child.attribs.type}"] = normalized
+          if sources["video/ogv"]
+            video.video = sources["video/ogv"]
+          else if sources["video/mp4"]
+            video.video = sources["video/mp4"]
+          else
+            video.video = sources[Object.keys(sources)[0]] if (Object.keys(a)).length
         results.push video
       when 'iframe'
         return results unless tag.attribs
