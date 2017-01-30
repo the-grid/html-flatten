@@ -458,7 +458,7 @@ module.exports = class Flatten
       return '' if tag.data.trim() is ''
       return '' if tag.data is '&nbsp;'
       return tag.data
-    allowSubBlock = tag.name in ['video', 'article', 'figure', 'blockquote']
+    allowSubBlock = tag.name in ['video', 'article', 'figure', 'figcaption', 'blockquote']
 
     if tag.name in @blockLevel and not tag.children?.length
       return ''
