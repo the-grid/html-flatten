@@ -356,8 +356,9 @@ module.exports = class Flatten
           type: 'code'
           html: @tagToHtml tag, id
       when 'ul', 'ol', 'dl'
+        type = if tag.name in ['ul', 'ol'] then tag.name else 'list'
         results.push
-          type: 'list'
+          type: type
           html: @tagToHtml tag, id
       when 'blockquote'
         results.push

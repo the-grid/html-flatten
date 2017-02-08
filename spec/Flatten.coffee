@@ -399,7 +399,7 @@ describe 'Flatten', ->
         items: [
           id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
-            type: 'list'
+            type: 'ul'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
           ]
         ]
@@ -435,7 +435,7 @@ describe 'Flatten', ->
         items: [
           id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
-            type: 'list'
+            type: 'ul'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
           ]
         ]
@@ -475,7 +475,7 @@ describe 'Flatten', ->
         items: [
           id: '6010f3ac-63f2-4407-a65d-9d6b7e9a40f2'
           content: [
-            type: 'list'
+            type: 'ul'
             html: '<ul><li>Hello world<ul><li>Foo</li></ul></li><li>Foo bar</li></ul>'
           ]
         ]
@@ -581,7 +581,7 @@ describe 'Flatten', ->
               html: "<p>three<br>four</p>"
               text: 'three four'
             ,
-              type: 'list'
+              type: 'ul'
               html: "<ul><li>br at end</li></ul>"
             ,
               type: 'text'
